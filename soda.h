@@ -20,3 +20,6 @@ using namespace std;
 #define NumCouriers                3    //# maximum number of couriers in the pool
 
 unsigned int seed;
+
+_Task NameServer;
+_Task VendingMachine;

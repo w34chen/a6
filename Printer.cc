@@ -78,16 +78,18 @@ void Printer::print(Kind kind, unsigned int lid, char state) {
 		index = (int)Student+student+lid; //index is after all students
 	else if (kind == Courier)
 		index = (int)Student+student+machine+lid; //index is after all students and vending machines
+
 	if (ch[index] && ch[index] != state)
 		flush();
+
 	if (state=='F') {
 		for (unsigned int i = 0; i < ch.size(); i++) {
 			ch[i] = '.';
 		}
-		ch[(int)kind] = state;
+		ch[index] = state;
 		flush();
 	}
-	ch[(int)kind] = state;
+	ch[index] = state;
 }
 
 void Printer::print(Kind kind, unsigned int lid, char state, int value1 ) {
@@ -116,7 +118,7 @@ void Printer::print(Kind kind, unsigned int lid, char state, int value1, int val
 		index = (int)Student+student+machine+lid; //index is after all students and vending machines
 	if (ch[index] && ch[index] != state)
 		flush();
-	ch[(int)kind] = state;
+	ch[index] = state;
 	num1[index] = value1;
 	num2[index] = value2;
 }
