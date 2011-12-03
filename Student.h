@@ -2,11 +2,11 @@
 #define STUDENT_H
 
 #include <uC++.h>
-/*
+
 #include "Printer.h"
 #include "NameServer.h"
 #include "WATCardOffice.h"
-*/
+
 
 _Task Student {
     void main();
