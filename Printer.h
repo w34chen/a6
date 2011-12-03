@@ -11,23 +11,25 @@ _Monitor Printer {
 	unsigned int courier;
 	void flush() {
 		for (unsigned int i = 0; i < ch.size(); i++) {
-			if (ch[i])
-				cout <<ch[i] <<" "; //print characters as is; vector modified before calling flush
-			if (num1[i])
+			if (ch[i]) {
+				if (ch[i]=='.') cout <<"...";
+				else cout <<ch[i]; //print characters as is; vector modified before calling flush
+			}
+			if (num1[i]!=-1) {
 				cout <<":" <<num1[i]; //if number exists print
-			if (num2[i])
+				num1[i] = -1;
+			}
+			if (num2[i]!=-1) {
 				cout <<":" <<num2[i] <<"\t";
+				num2[i] = -1;
+			}
 			else
 				cout <<"\t";
 
 		}
 		ch.clear(); //reset ch
-		num1.clear(); //reset num
-		num2.clear();
 		cout <<endl;
 		ch.resize(total);
-		num1.resize(total);
-		num2.resize(total);
 	}
   public:
     enum Kind { Parent, WATCardOffice, NameServer, Truck, BottlingPlant, Student, Vending, Courier };

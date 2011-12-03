@@ -1,6 +1,6 @@
 #include "soda.h"
 #include "Printer.cc"
-#include "mprng.h"
+//#include "mprng.h"
 
 #define SodaCost                   1    //# Manufacturer Suggested Retail Price (MSRP) per bottle
 #define NumStudents                4   // # number of students to create
@@ -13,14 +13,12 @@
 #define ParentalDelay             20   // # length of time between new deposits of funds
 #define NumCouriers                3    //# maximum number of couriers in the pool
 
-unsigned int seed;
-
 void uMain::main() {
 
 	unsigned int numStudents=2, numVendingMachines=2, numCouriers=1;
 	seed = 3;
 
-	MPRNG mprng(seed);
+	//MPRNG mprng(seed);
 
 	Printer prt(numStudents,numVendingMachines,numCouriers);
 

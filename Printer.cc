@@ -9,8 +9,16 @@ Printer::Printer(unsigned int numStudents, unsigned int numVendingMachines, unsi
 	machine = numVendingMachines;
 	courier = numCouriers;
 
+	ch.resize(total);
+	num1.resize(total);
+	num2.resize(total);
+
 	//and size the ch and num vectors with initialization values
-	cout <<setw(6) <<"Parent" <<"WATOff" <<"Names" <<"Truck" <<"Plant";
+	cout <<setw(6) <<"Parent";
+	cout <<setw(6) <<"WATOff";
+	cout <<setw(6) <<"Names";
+	cout <<setw(6) <<"Truck";
+	cout <<setw(6) <<"Plant";
 	for (unsigned int i = 0; i < numStudents; i++)
 		cout <<setw(6) <<"Stud:" <<i;
 	for (unsigned int i = 0; i < numVendingMachines; i++)
@@ -19,24 +27,32 @@ Printer::Printer(unsigned int numStudents, unsigned int numVendingMachines, unsi
 		cout <<setw(6) <<"Cour:" <<i;
 	cout <<endl;
 
-	for (unsigned int i = 0; i < total; i++)
+	for (unsigned int i = 0; i < total; i++) {
 		cout <<"******* ";
+		num1[i] = -1;
+		num2[i] = -1;
+	}
 	cout <<endl;
-
-	ch.resize(total);
-	num1.resize(total);
-	num2.resize(total);
 }
 
 void Printer::print(Kind kind, char state ) {
-	flush();
-	//occupy ch and num with new values
+	if (ch[(int)kind] && ch[(int)kind] != state)
+		flush();
+
+	if (state=='F') {
+		for (unsigned int i = 0; i < ch.size(); i++) {
+			ch[i] = '.';
+		}
+		ch[(int)kind] = state;
+		flush();
+	}
 	ch[(int)kind] = state;
+
 }
 
 //function only called when printing F. V # are printed through numBLock
 void Printer::print(Kind kind, char state, int value1 ) {
-	if (ch[(int)kind] != state)
+	if (ch[(int)kind] && ch[(int)kind] != state)
 		flush();
 
 	//occupy ch and num with new values
@@ -46,7 +62,7 @@ void Printer::print(Kind kind, char state, int value1 ) {
 
 void Printer::print(Kind kind, char state, int value1, int value2) {
 	//only flush if there is a change in state
-	if (ch[(int)kind] != state)
+	if (ch[(int)kind] && ch[(int)kind] != state)
 		flush();
 	ch[(int)kind] = state;
 	num1[(int)kind] =value1;
@@ -62,8 +78,15 @@ void Printer::print(Kind kind, unsigned int lid, char state) {
 		index = (int)Student+student+lid; //index is after all students
 	else if (kind == Courier)
 		index = (int)Student+student+machine+lid; //index is after all students and vending machines
-	if (ch[index] != state)
+	if (ch[index] && ch[index] != state)
 		flush();
+	if (state=='F') {
+		for (unsigned int i = 0; i < ch.size(); i++) {
+			ch[i] = '.';
+		}
+		ch[(int)kind] = state;
+		flush();
+	}
 	ch[(int)kind] = state;
 }
 
@@ -76,7 +99,7 @@ void Printer::print(Kind kind, unsigned int lid, char state, int value1 ) {
 		index = (int)Student+student+lid; //index is after all students
 	else if (kind == Courier)
 		index = (int)Student+student+machine+lid; //index is after all students and vending machines
-	if (ch[index] != state)
+	if (ch[index] && ch[index] != state)
 		flush();
 	ch[index] = state;
 	num1[index] = value1;
@@ -91,7 +114,7 @@ void Printer::print(Kind kind, unsigned int lid, char state, int value1, int val
 		index = (int)Student+student+lid; //index is after all students
 	else if (kind == Courier)
 		index = (int)Student+student+machine+lid; //index is after all students and vending machines
-	if (ch[index] != state)
+	if (ch[index] && ch[index] != state)
 		flush();
 	ch[(int)kind] = state;
 	num1[index] = value1;
