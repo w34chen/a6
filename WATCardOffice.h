@@ -21,13 +21,30 @@ _Task WATCardOffice {
     };
     _Task Courier { //communicate with bank
       Bank& bank;
-
+      WATCardOffice cardOffice;
+      Job* job;
       void main() {
 	// Request work
+	job = cardOffice.requstWork();
+	
+	// Extract parameters from job
+	unsigned int id = job->arg.id;
+	unsigned int amount = job->arg.amount;
+	WATCard* watcard = job->arg.watcard;
+
+	// Transfer fond from bank
+	bank.withdraw(id, amount);
+	
+	// Deposit money into watcard
+	watcard->deposit(amount);
 	
 	// Randomly lost WATCard 
+	
+	// Deliver the real watcard pointer for the future
+	job->result.delivery(watcard);
       }
-    Courier(Bank& bank) : bank(bank) {
+    Courier(Bank& bank, WATCardOffice& cardOffice) : bank(bank), cardOffice(cardOffice) {
+	job = NULL;
       }
       
     };
@@ -38,6 +55,7 @@ _Task WATCardOffice {
     Bank &bank;
     unsigned int numCouriers;
     std::vector<Courier*> workers;
+    std::vector<Job*> jobs;
   public:
     _Event Lost {};
     WATCardOffice( Printer &prt, Bank &bank, unsigned int numCouriers );

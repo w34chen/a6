@@ -51,6 +51,16 @@ FWATCard WATCardOffice::create( unsigned int sid, unsigned int amount, WATCard *
   // Future WATCard is returned
 
   // Sufficient fund is obtained from bank
+  
+  // Create job for this create
+  Args arg;
+  arg.id = sid;
+  arg.amount = amount;
+  arg.card = card;
+  Job* job = new Job(arg);
+  
+  jobs.push_back(job);
+  return job->result;
 }
 
 FWATCard WATCardOffice::transfer( unsigned int sid, unsigned int amount, WATCard *card ) {
@@ -58,6 +68,16 @@ FWATCard WATCardOffice::transfer( unsigned int sid, unsigned int amount, WATCard
 
   // future WATCard is returned
 
+  // Create job for this transfer
+  Args arg;
+  arg.id = sid;
+  arg.amount = amount;
+  arg.card = card;
+  Job* job = new Job(arg);
+  
+  jobs.push_back(job);
+
+  return job->result;
 }
  
 Job* WATCardOffice::requestWork() {
