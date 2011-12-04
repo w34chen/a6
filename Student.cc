@@ -2,6 +2,9 @@
 
 #include "Student.h"
 #include "NameServer.h"
+#include "mprng.h"
+
+extern MPRNG mprng_;
 
 void Student::main() {
   // Generate how many times student is going to purchase soda
