@@ -9,6 +9,7 @@
 #define MPRNG_H_
 
 #include "uC++.h"
+#include "PRNG.h"
 
 _Monitor MPRNG: private PRNG {
 public:

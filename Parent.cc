@@ -3,6 +3,8 @@
 #include "mprng.h"
 #include "Parent.h"
 
+extern MPRNG mprng_;
+
 Parent::Parent( Printer &prt, Bank &bank, unsigned int numStudents, unsigned int parentalDelay ) :
   printer(prt), bank(bank), numStudents(numStudents), parentalDelay(parentalDelay)
 {
@@ -26,10 +28,10 @@ void Parent::main() {
     }
     else {
       // randomly generate amount of money to give
-      unsigned int amount = mprng() % 3 + 1;
+      unsigned int amount = mprng_(1, 3);
       
       //randomly generate which student to give money to
-      unsigned int studentId = mprng() % numStudents;
+      unsigned int studentId = mprng_(numStudents);
 
       // yield for parentalDelay
       yield(parentalDelay);

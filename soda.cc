@@ -1,17 +1,19 @@
 #include "soda.h"
-#include "Printer.cc"
-#include "WATCard.cc"
-#include "NameServer.cc"
-#include "VendingMachine.cc"
+#include "Printer.h"
+#include "WATCard.h"
+#include "NameServer.h"
+#include "VendingMachine.h"
 
-//#include "mprng.h"
+#include "mprng.h"
+
+MPRNG mprng_;
 
 void uMain::main() {
 
 	unsigned int numStudents=2, numVendingMachines=2, numCouriers=1;
 	seed = 3;
 
-	//MPRNG mprng(seed);
+	mprng_.seed(seed);
 
 	Printer prt(numStudents,numVendingMachines,numCouriers);
 
