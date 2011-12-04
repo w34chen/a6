@@ -12,6 +12,8 @@ Parent::Parent( Printer &prt, Bank &bank, unsigned int numStudents, unsigned int
 }
 
 Parent::~Parent() {
+  //Printer: Parent Finished
+  printer.print(Printer::Parent, 'F');
 }
 
 void Parent::main() {
@@ -21,7 +23,10 @@ void Parent::main() {
   // The parent must check for a call to its destructor to know when to terminate. 
   // Since it must not block on this call, it is necessary to use a terminating else on the accept statement. 
   // (Hence, the parent is busy waiting for the call to its destructor.)
-
+  
+  // Prints: Parent Start
+  printer.print(Printer::Parent, 'S');
+  
   for (;;) {
     _Accept (~Parent) {
       break;
@@ -37,6 +42,8 @@ void Parent::main() {
       yield(parentalDelay);
 
       bank.deposit(studentId, amount);
+      // Printer:: Parent Deposit gift to Student and Amount
+      printer.print(Printer::Parent, 'D', studentId, amount);
     }
   }
 }
