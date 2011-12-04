@@ -12,5 +12,5 @@ Student.o: Student.cc /usr/local/u++-5.7.0/inc/uC++.h \
  /usr/local/u++-5.7.0/inc/uPIHeap.h /usr/local/u++-5.7.0/inc/uHeap.h \
  /usr/local/u++-5.7.0/inc/uBaseSelector.h \
  /usr/local/u++-5.7.0/inc/uLocalDebugger.h Student.h Printer.h \
- NameServer.h WATCardOffice.h WATCard.h \
- /usr/local/u++-5.7.0/inc/uFuture.h Bank.h
+ NameServer.h VendingMachine.h WATCard.h \
+ /usr/local/u++-5.7.0/inc/uFuture.h WATCardOffice.h Bank.h mprng.h PRNG.h

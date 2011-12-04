@@ -42,10 +42,8 @@ WATCardOffice::WATCardOffice( Printer &prt, Bank &bank, unsigned int numCouriers
  
 FWATCard WATCardOffice::create( unsigned int sid, unsigned int amount, WATCard *&card ) {
   // Student create WATCard though output parameter card with initial balance
-
-  // Future WATCard is returned
-
   // Sufficient fund is obtained from bank
+
   
   // Create job for this create
   Args arg;
@@ -55,13 +53,15 @@ FWATCard WATCardOffice::create( unsigned int sid, unsigned int amount, WATCard *
   Job* job = new Job(arg);
   
   jobs.push(job);
+
+// Future WATCard is returned
   return job->result;
 }
 
 FWATCard WATCardOffice::transfer( unsigned int sid, unsigned int amount, WATCard *card ) {
   // Student call to transfer when its WATCard has insufficient funds
-
-  // future WATCard is returned
+  // Sufficient fund is obtained from bank
+  
 
   // Create job for this transfer
   Args arg;
@@ -72,6 +72,7 @@ FWATCard WATCardOffice::transfer( unsigned int sid, unsigned int amount, WATCard
   
   jobs.push(job);
 
+  // future WATCard is returned
   return job->result;
 }
  
