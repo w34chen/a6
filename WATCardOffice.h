@@ -28,10 +28,16 @@ _Task WATCardOffice {
     _Task Courier { //communicate with bank
       Bank& bank;
       WATCardOffice* const cardOffice;
+      Printer& printer;
       Job* job;
       void main() {
+	// Printe: Courier Start
+	printer.print(Printer::Courier, 'S');
+
 	for (;;) {
 	  _Accept(~Courier) {
+	    // Pinter:Courier Finish
+	    printer.print(Printer::Courier, 'F');	    
 	  }
 	  else {
 	    // Request work
@@ -41,12 +47,18 @@ _Task WATCardOffice {
 	    unsigned int id = job->args.id;
 	    unsigned int amount = job->args.amount;
 	    WATCard* watcard = job->args.watcard;
-
+	    
+	    // Pinter:Courier Start fund transfer
+	    printer.print(Printer::Courier, 't', id, amount);
+	    
 	    // Transfer fond from bank
 	    bank.withdraw(id, amount);
 
 	    // Deposit money into watcard
 	    watcard->deposit(amount);
+
+	    // Pinter:Courier Complete fund transfer
+	    printer.print(Printer::Courier, 'T', id, amount);
 
 	    // Randomly lost WATCard
 	    bool loseWATCard = ( mprng_(6) == 0);
@@ -63,7 +75,9 @@ _Task WATCardOffice {
 	} // for loop
       }
     public:
-    Courier(Bank& bank, WATCardOffice* const cardOffice) : bank(bank), cardOffice(cardOffice) {
+    Courier(Bank& bank, WATCardOffice* const cardOffice, Printer& printer) : 
+      bank(bank), cardOffice(cardOffice), printer(printer) 
+      {
 	job = NULL;
       }
       ~Courier() {}
