@@ -16,12 +16,17 @@ void Student::main() {
   // Select a random flavor [0,3]
   VendingMachine::Flavours favFlavour = (VendingMachine::Flavours)mprng_(0,3);
 
+  // Printer: Student Start Favourite soda Num of bottle
+  printer.print(Printer::Student, 'S', favFlavour, numOfSoda);
+
   // Create a new WATCard with $5 balance
   WATCard* card;
   FWATCard fCard = cardOffice.create(id, 5, card);
 
   // Obtain location to vending machine from name server
   VendingMachine* vendingMachine = nameServer.getMachine(id);
+  // Printer: Student Select vending machine
+  printer.print(Printer::Student, 'V', vendingMachine->getId());
   
   // Loop through all the attempts to purchase soda
   for (unsigned int i = 0; i < numOfSoda; i++) {
@@ -37,11 +42,13 @@ void Student::main() {
 	  
 	  if (status == VendingMachine::FUNDS) { // Insufficient funds
 	    // Transfer soda-code plus $5 to WATCard via WATCard office
-	    cardOffice.transfer(id, 5, fCard);
+	    cardOffice.transfer(id, 5 + vendingMachine->cost(), fCard);
 
 	  } else if (status == VendingMachine::STOCK) { // Vending machine out of flavor
 	    // Obtain new vending machine from name server
 	    vendingMachine = nameServer.getMachine(id);
+	    // Printer: Student Select vending machine
+	    printer.print(Printer::Student, 'V', vendingMachine->getId());
 
 	  } else { // status == BUY, successful purchase
 	    goto L1; // jump out of buying loop
@@ -49,6 +56,9 @@ void Student::main() {
 	}
       } catch (WATCardOffice::Lost) {
 	// WATCard is lost
+	// Printer: Student Watcard is lost
+	printer.print(Printer::Student, 'L');
+
 	// Delete old WATCard
 	delete fCard;
 
@@ -58,8 +68,13 @@ void Student::main() {
     } // while loop
   L1:; // Successfully bought soda
     // Drink soda
-
+    // Printer: Student Bought a soda
+    printer.print(Printer::Student, 'B', card->getBalance());
+    
   } // for loop
+  
+  // Printer: Student Finished
+  printer.print(Printer::Student, 'F');
 }
 
 
