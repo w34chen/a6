@@ -33,21 +33,24 @@ void Student::main() {
       try {
 	_Enable {
 	  // Purchase sode from vending machine
+	  VendingMachine::Status status = vendingMachine->buy(favFlavour, *(fCard()));
+	  
+	  if (status == VendingMachine::FUNDS) { // Insufficient funds
+	    // Transfer soda-code plus $5 to WATCard via WATCard office
+	    cardOffice.transfer(id, 5, fCard);
 
-	  // Insufficient funds
+	  } else if (status == VendingMachine::STOCK) { // Vending machine out of flavor
+	    // Obtain new vending machine from name server
+	    vendingMachine = nameServer.getMachine(id);
 
-	  // Transfer soda-code plus $5 to WATCard via WATCard office
-
-	  // Vending machine out of flavor
-
-	  // Obtain new vending machine from name server
-
+	  } else { // status == BUY, successful purchase
+	    goto L1; // jump out of buying loop
+	  }	
 	}
       } catch (WATCardOffice::Lost) {
 	// WATCard is lost
 	// Delete old WATCard
 	// Create new WATCard
-
       }
     } // while
   L1:; // Successfully bought soda
