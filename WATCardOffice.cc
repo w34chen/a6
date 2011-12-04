@@ -31,16 +31,11 @@ the exception WATCardOffice::Lost is inserted into the future rather than making
 
 }
 
-_Event WATCardOffice::Lost {
-  // This is exception where the WATCard is lost
-
-}
-
 WATCardOffice::WATCardOffice( Printer &prt, Bank &bank, unsigned int numCouriers ) : 
   printer(prt), bank(bank), numCouriers(numCouriers)
 {
-  for (int i = 0; i < numCouriers; i ++) {
-    Courier *temp = new Courier();
+  for (unsigned int i = 0; i < numCouriers; i ++) {
+    Courier *temp = new Courier(bank, this);
     workers.push_back(temp);
   }
 }
@@ -56,7 +51,7 @@ FWATCard WATCardOffice::create( unsigned int sid, unsigned int amount, WATCard *
   Args arg;
   arg.id = sid;
   arg.amount = amount;
-  arg.card = card;
+  arg.watcard = card;
   Job* job = new Job(arg);
   
   jobs.push(job);
@@ -72,7 +67,7 @@ FWATCard WATCardOffice::transfer( unsigned int sid, unsigned int amount, WATCard
   Args arg;
   arg.id = sid;
   arg.amount = amount;
-  arg.card = card;
+  arg.watcard = card;
   Job* job = new Job(arg);
   
   jobs.push(job);
@@ -80,7 +75,7 @@ FWATCard WATCardOffice::transfer( unsigned int sid, unsigned int amount, WATCard
   return job->result;
 }
  
-Job* WATCardOffice::requestWork() {
+WATCardOffice::Job* WATCardOffice::requestWork() {
   // Courier request work
   Job* job = jobs.top();
   jobs.pop();
@@ -89,7 +84,7 @@ Job* WATCardOffice::requestWork() {
 }
 
 WATCardOffice::~WATCardOffice() {
-  for (int i = 0; i < numCouriers; i ++) {
+  for (unsigned int i = 0; i < numCouriers; i ++) {
     delete workers.at(i);
   }
 }

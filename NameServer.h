@@ -2,6 +2,12 @@
 #define NAMESERVER_H
 
 #include <uC++.h>
+#include <vector>
+
+#include "VendingMachine.h"
+#include "Printer.h"
+
+_Task VendingMachine;
 
 _Task NameServer {
 	Printer *pPrt;

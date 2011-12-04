@@ -1,4 +1,7 @@
 #include "NameServer.h"
+#include <iostream>
+
+using namespace std;
 
 NameServer::NameServer( Printer &prt, unsigned int numVendingMachines,
 		unsigned int numStudents ) {

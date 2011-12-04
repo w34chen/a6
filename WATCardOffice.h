@@ -27,11 +27,11 @@ _Task WATCardOffice {
 
     _Task Courier { //communicate with bank
       Bank& bank;
-      WATCardOffice& cardOffice;
+      WATCardOffice* const cardOffice;
       Job* job;
       void main() {
 	// Request work
-	job = cardOffice.requestWork();
+	job = cardOffice->requestWork();
 	
 	// Extract parameters from job
 	unsigned int id = job->args.id;
@@ -53,8 +53,11 @@ _Task WATCardOffice {
 	
 	// Deliver the real watcard pointer for the future
 	job->result.delivery(watcard);
+
+	delete job;
       }
-    Courier(Bank& bank, WATCardOffice& cardOffice) : bank(bank), cardOffice(cardOffice) {
+    public:
+    Courier(Bank& bank, WATCardOffice* const cardOffice) : bank(bank), cardOffice(cardOffice) {
 	job = NULL;
       }
       
@@ -70,6 +73,7 @@ _Task WATCardOffice {
   public:
     _Event Lost {};
     WATCardOffice( Printer &prt, Bank &bank, unsigned int numCouriers );
+    ~WATCardOffice();
     FWATCard create( unsigned int sid, unsigned int amount, WATCard *&card );
     FWATCard transfer( unsigned int sid, unsigned int amount, WATCard *card );
     Job *requestWork();

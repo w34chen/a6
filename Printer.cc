@@ -1,5 +1,10 @@
 #include "Printer.h"
 
+#include <iostream>
+#include <iomanip>
+
+using namespace std;
+
 Printer::Printer(unsigned int numStudents, unsigned int numVendingMachines, unsigned int numCouriers ) {
 	//print the initial:
 	//Parent  WATOff Names...

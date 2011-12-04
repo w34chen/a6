@@ -3,12 +3,18 @@
 
 #include <uC++.h>
 
+#include "NameServer.h"
+#include "Printer.h"
+#include "WATCard.h"
+
+_Task NameServer;
+
 _Task VendingMachine {
 	unsigned int ID;
 	unsigned int Cost;
 	unsigned int maxStock;
-	Printer *pPrt;
-	NameServer *server;
+	Printer* pPrt;
+	NameServer* server;
 	unsigned int stock[4];
 	bool restocking;
     void main();

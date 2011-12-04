@@ -3,6 +3,10 @@
 
 #include <uC++.h>
 
+#include "Printer.h"
+#include "NameServer.h"
+#include "BottlingPlant.h"
+
 _Task Truck {
 	Printer *pPrt;
 	NameServer *server;

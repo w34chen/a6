@@ -1,6 +1,10 @@
 #ifndef PRINTER_H
 #define PRINTER_H
 
+#include <uC++.h>
+#include <vector>
+#include <iostream>
+
 _Monitor Printer {
 	std::vector<char> ch; //state buffer
 	std::vector<int> num1; //number buffer
@@ -12,23 +16,23 @@ _Monitor Printer {
 	void flush() {
 		for (unsigned int i = 0; i < ch.size(); i++) {
 			if (ch[i]) {
-				if (ch[i]=='.') cout <<"...";
-				else cout <<ch[i]; //print characters as is; vector modified before calling flush
+				if (ch[i]=='.') std::cout <<"...";
+				else std::cout <<ch[i]; //print characters as is; vector modified before calling flush
 			}
 			if (num1[i]!=-1) {
-				cout <<":" <<num1[i]; //if number exists print
+				std::cout <<":" <<num1[i]; //if number exists print
 				num1[i] = -1;
 			}
 			if (num2[i]!=-1) {
-				cout <<":" <<num2[i] <<"\t";
+				std::cout <<":" <<num2[i] <<"\t";
 				num2[i] = -1;
 			}
 			else
-				cout <<"\t";
+				std::cout <<"\t";
 
 		}
 		ch.clear(); //reset ch
-		cout <<endl;
+		std::cout << std::endl;
 		ch.resize(total);
 	}
   public:

@@ -3,6 +3,9 @@
 
 #include <uC++.h>
 
+#include "Printer.h"
+#include "NameServer.h"
+
 _Task BottlingPlant {
 	Printer *pPrt;
 	NameServer *server;

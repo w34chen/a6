@@ -17,6 +17,8 @@ public:
 	MPRNG( unsigned int seed = 1009 ) { srand( seed ); }
 	void seed( unsigned int seed ) { srand( seed ); }
     unsigned int operator()() { return rand(); }
+    unsigned int operator()(unsigned int x1) { return PRNG::operator()(x1);}
+    unsigned int operator()(unsigned int x2, unsigned int x1) { return PRNG::operator()(x2, x1);}
 };
 
 #endif /* MPRNG_H_ */

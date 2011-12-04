@@ -2,12 +2,6 @@
 
 #include "WATCard.h"
 
-WATCard::WATCard( const WATCard & ) {
-}
-
-WATCard WATCard::&operator=( const WATCard & ) {
-}
-
 WATCard::WATCard() {
   balance = 0;
 }
