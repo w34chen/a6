@@ -30,37 +30,43 @@ _Task WATCardOffice {
       WATCardOffice* const cardOffice;
       Job* job;
       void main() {
-	// Request work
-	job = cardOffice->requestWork();
-	
-	// Extract parameters from job
-	unsigned int id = job->args.id;
-	unsigned int amount = job->args.amount;
-	WATCard* watcard = job->args.watcard;
+	for (;;) {
+	  _Accept(~Courier) {
+	  }
+	  else {
+	    // Request work
+	    job = cardOffice->requestWork();
+	  
+	    // Extract parameters from job
+	    unsigned int id = job->args.id;
+	    unsigned int amount = job->args.amount;
+	    WATCard* watcard = job->args.watcard;
 
-	// Transfer fond from bank
-	bank.withdraw(id, amount);
-	
-	// Deposit money into watcard
-	watcard->deposit(amount);
-	
-	// Randomly lost WATCard
-	bool loseWATCard = ( mprng_(6) == 0);
-	if (loseWATCard) {
-	  Lost* lost = new Lost();
-	  job->result.exception(lost);
-	}
-	
-	// Deliver the real watcard pointer for the future
-	job->result.delivery(watcard);
+	    // Transfer fond from bank
+	    bank.withdraw(id, amount);
 
-	delete job;
+	    // Deposit money into watcard
+	    watcard->deposit(amount);
+
+	    // Randomly lost WATCard
+	    bool loseWATCard = ( mprng_(6) == 0);
+	    if (loseWATCard) {
+	      Lost* lost = new Lost();
+	      job->result.exception(lost);
+	    }
+
+	    // Deliver the real watcard pointer for the future
+	    job->result.delivery(watcard);
+
+	    delete job;
+	  } // else
+	} // for loop
       }
     public:
     Courier(Bank& bank, WATCardOffice* const cardOffice) : bank(bank), cardOffice(cardOffice) {
 	job = NULL;
       }
-      
+      ~Courier() {}
     };
 
     void main();

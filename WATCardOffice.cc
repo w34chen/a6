@@ -3,13 +3,24 @@
 #include "WATCardOffice.h"
 
 void WATCardOffice::main() {
+  // Printer: WATCardOffice Start
+  printer.print(Printer::WATCardOffice, 'S');
+
   for (;;) {
     // Always accept create WATCard
     // Always accept transfer
-    _Accept(create, transfer) {
+    _Accept(create) {
+      // Printer::Creation Complete
+      printer.print(Printer::WATCardOffice, 'C');
+    }
+    or _Accept(transfer) {
+      // Printer::Transfer Complete
+      printer.print(Printer::WATCardOffice, 'T');
     }
     or _When (jobs.size() != 0) _Accept (requestWork) {
       // Only accept request from courier when there is job
+      // Printer::Courier Complete
+      printer.print(Printer::WATCardOffice, 'W');
     } 
   }
 }
@@ -39,7 +50,7 @@ FWATCard WATCardOffice::create( unsigned int sid, unsigned int amount, WATCard *
   
   jobs.push(job);
 
-// Future WATCard is returned
+  // Future WATCard is returned
   return job->result;
 }
 
