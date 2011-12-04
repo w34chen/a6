@@ -3,6 +3,7 @@
 
 #include <uC++.h>
 #include <vector>
+#include <stack>
 
 #include "WATCard.h"
 #include "Bank.h"
@@ -21,16 +22,16 @@ _Task WATCardOffice {
     };
     _Task Courier { //communicate with bank
       Bank& bank;
-      WATCardOffice cardOffice;
+      WATCardOffice& cardOffice;
       Job* job;
       void main() {
 	// Request work
-	job = cardOffice.requstWork();
+	job = cardOffice.requestWork();
 	
 	// Extract parameters from job
-	unsigned int id = job->arg.id;
-	unsigned int amount = job->arg.amount;
-	WATCard* watcard = job->arg.watcard;
+	unsigned int id = job->args.id;
+	unsigned int amount = job->args.amount;
+	WATCard* watcard = job->args.watcard;
 
 	// Transfer fond from bank
 	bank.withdraw(id, amount);
@@ -55,7 +56,7 @@ _Task WATCardOffice {
     Bank &bank;
     unsigned int numCouriers;
     std::vector<Courier*> workers;
-    std::vector<Job*> jobs;
+    std::stack<Job*> jobs;
   public:
     _Event Lost {};
     WATCardOffice( Printer &prt, Bank &bank, unsigned int numCouriers );

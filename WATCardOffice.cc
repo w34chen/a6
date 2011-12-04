@@ -59,7 +59,7 @@ FWATCard WATCardOffice::create( unsigned int sid, unsigned int amount, WATCard *
   arg.card = card;
   Job* job = new Job(arg);
   
-  jobs.push_back(job);
+  jobs.push(job);
   return job->result;
 }
 
@@ -75,14 +75,17 @@ FWATCard WATCardOffice::transfer( unsigned int sid, unsigned int amount, WATCard
   arg.card = card;
   Job* job = new Job(arg);
   
-  jobs.push_back(job);
+  jobs.push(job);
 
   return job->result;
 }
  
 Job* WATCardOffice::requestWork() {
   // Courier request work
+  Job* job = jobs.top();
+  jobs.pop();
 
+  return job;
 }
 
 WATCardOffice::~WATCardOffice() {
