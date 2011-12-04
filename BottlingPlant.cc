@@ -4,24 +4,27 @@
 using namespace std;
 
 bool BottlingPlant::getShipment( unsigned int cargo[] ) {
-  return false;
+	//if closing, return true;
+	for (int i = 0; i < 4; i++)
+		cargo[i] = producedStock[i];
+	pickup.signal();
+	//cout <<"bottling plant get shipment: unblocked" <<endl;
+    return false;
 }
 
 void BottlingPlant::main() {
 	pPrt->print(Printer::BottlingPlant, 'S');
-	Truck *truck = new Truck(*pPrt, *server, *this, 0, 0); // these last two numbers are numVendingMachines and maxStockPerFlavor);
+	Truck truck(*pPrt, *server, *this, numVendingMachines, maxStockPerFlavour);
 	for (;;) {
+		//cout <<"bottling plant main loop: about to yield " <<endl;
 		yield(timeBetweenShipments);
-		/*
-		  These code are from NameServer? -by Weiliang
-
-		cout <<"inside nameServer main for loop" <<endl;
-		_Accept(~NameServer) {
-			break;
-		} or _Accept(VMregister, getMachine, getMachineList) {
-			cout <<"inside nameServer accept buy and inventory" <<endl;
+		for (int i = 0; i < 4; i++) {
+			producedStock[i] = rand()%maxShippedPerFlavour;
+			//cout <<"produced " <<i <<" flavour with quantity " <<producedStock[i] <<endl;
 		}
-		*/
+		pPrt->print(Printer::BottlingPlant, 'G', producedStock[0]+producedStock[1]+producedStock[2]+producedStock[3]);
+		pickup.wait();
+		pPrt->print(Printer::BottlingPlant, 'P'); //this one might need to go in getShipment
 	}
 	pPrt->print(Printer::BottlingPlant, 'F');
 }

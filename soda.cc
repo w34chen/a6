@@ -3,6 +3,8 @@
 #include "WATCard.h"
 #include "NameServer.h"
 #include "VendingMachine.h"
+#include "BottlingPlant.h"
+#include "Truck.h"
 
 #include "mprng.h"
 
@@ -28,22 +30,9 @@ void uMain::main() {
 	VendingMachine *vendingMachine[numVendingMachines];
 	for (unsigned int i = 0; i < numVendingMachines; i++)
 		vendingMachine[i] = new VendingMachine(prt, nameServer, i, SodaCost, MaxStockPerFlavour );
-
-	unsigned int *inventory = vendingMachine[0]->inventory();
-	cout <<"inventory " <<inventory[0] <<" " <<inventory[1] <<" " <<inventory[2] <<" " <<inventory[3] <<endl;
-
-	inventory[0] = 3;
-	inventory[1] = 3;
-	inventory[2] = 3;
-	inventory[3] = 3;
-
-	WATCard *card = new WATCard();
-	vendingMachine[0]->restocked();
-	vendingMachine[0]->buy(VendingMachine::CREAM, *card);
-
-
-	//BottlingPlant *bottlingPlant = new BottlingPlant(prt, nameServer, numVendingMachines,maxShippedPerFlavour,
-	//		maxStockPerFlavour, timeBetweenShipments ); //truck is created by the bottling plant
+	cout <<"umain: max stock per flavour: " <<MaxStockPerFlavour <<endl;
+	BottlingPlant *bottlingPlant = new BottlingPlant(prt, nameServer, numVendingMachines,MaxShippedPerFlavour,
+			MaxStockPerFlavour, TimeBetweenShipments ); //truck is created by the bottling plant
 
 	//Student *student[numStudents];
 	//for (int i = 0; i < numStudents; i++)
@@ -54,8 +43,8 @@ void uMain::main() {
 
 	//delete(bottlingPlant);
 
-	//for (int i = 0; i < numVendingMachines; i++)
-	//	delete(vendingMachine[i]);
+	for (int i = 0; i < numVendingMachines; i++)
+		delete(vendingMachine[i]);
 
 
 }

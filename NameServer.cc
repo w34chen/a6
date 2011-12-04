@@ -16,6 +16,7 @@ NameServer::NameServer( Printer &prt, unsigned int numVendingMachines,
 }
 void NameServer::VMregister( VendingMachine *vendingmachine ) {
 	unsigned int id = vendingmachine->getId();
+	cout <<"registering " <<id <<" machine" <<endl;
 	pPrt->print(Printer::NameServer, 'R', id);
 	machineList[addedMachines] = vendingmachine;
 	addedMachines++;
@@ -33,11 +34,9 @@ VendingMachine ** NameServer::getMachineList() {
 void NameServer::main() {
 	pPrt->print(Printer::NameServer, 'S');
 	for (;;) {
-		cout <<"inside nameServer main for loop" <<endl;
 		_Accept(~NameServer) {
 			break;
 		} or _Accept(VMregister, getMachine, getMachineList) {
-			cout <<"inside nameServer accept buy and inventory" <<endl;
 		}
 	}
 	pPrt->print(Printer::NameServer, 'F');

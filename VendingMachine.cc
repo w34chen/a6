@@ -26,14 +26,14 @@ VendingMachine::Status VendingMachine::buy( Flavours flavour, WATCard &card ) {
 }
 
 unsigned int * VendingMachine::inventory() {
-	cout <<"inside inventory " <<endl;
+	//cout <<"called " <<ID <<" inventory: " <<stock <<" " <<&stock[0] <<" " <<&stock[1] <<" " <<&stock[2] <<" " <<&stock[3] <<endl;
 	pPrt->print(Printer::Vending, ID, 'r');
 	restocking = true;
 	return stock;
 }
 
 void VendingMachine::restocked() {
-	cout <<"inside restocked " <<endl;
+	//cout <<"called VendingMachine::restocked" <<endl;
 	restocking = false;
 	pPrt->print(Printer::Vending, ID, 'R');
 }
@@ -44,15 +44,13 @@ _Nomutex unsigned int VendingMachine::getId() { return ID; }
 
 void VendingMachine::main() {
 	pPrt->print(Printer::Vending, ID, 'S');
-	//server->VMregister(&this);
+	server->VMregister(this);
 	for (;;) {
-		cout <<"inside vendingMachine main for loop" <<endl;
-		_Accept(~VendingMachine) {
-			break;
-		} or _When(!restocking) _Accept(buy, inventory) {
-			cout <<"inside accept buy and inventory" <<endl;
+		//_Accept(~VendingMachine) {
+		//	break;
+		//} or _When(!restocking) _Accept(buy, inventory) {
+		_When (!restocking) _Accept(buy, inventory) {
 		} or _When(restocking) _Accept(restocked) {
-			cout <<"inside accept restocked" <<endl;
 		}
 	}
 	pPrt->print(Printer::Vending, ID, 'F');

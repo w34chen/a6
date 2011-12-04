@@ -19,17 +19,17 @@ Printer::Printer(unsigned int numStudents, unsigned int numVendingMachines, unsi
 	num2.resize(total);
 
 	//and size the ch and num vectors with initialization values
-	cout <<setw(6) <<"Parent";
-	cout <<setw(6) <<"WATOff";
-	cout <<setw(6) <<"Names";
-	cout <<setw(6) <<"Truck";
-	cout <<setw(6) <<"Plant";
+	cout <<setw(6) <<"Parent\t";
+	cout <<setw(6) <<"WATOff\t";
+	cout <<setw(6) <<"Names\t";
+	cout <<setw(6) <<"Truck\t";
+	cout <<setw(6) <<"Plant\t";
 	for (unsigned int i = 0; i < numStudents; i++)
-		cout <<setw(6) <<"Stud:" <<i;
+		cout <<setw(6) <<"Stud:" <<i <<"\t";
 	for (unsigned int i = 0; i < numVendingMachines; i++)
-		cout <<setw(6) <<"Mach:" <<i;
+		cout <<setw(6) <<"Mach:" <<i <<"\t";
 	for (unsigned int i = 0; i < numVendingMachines; i++)
-		cout <<setw(6) <<"Cour:" <<i;
+		cout <<setw(6) <<"Cour:" <<i <<"\t";
 	cout <<endl;
 
 	for (unsigned int i = 0; i < total; i++) {
