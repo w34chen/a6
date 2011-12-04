@@ -50,13 +50,16 @@ void Student::main() {
       } catch (WATCardOffice::Lost) {
 	// WATCard is lost
 	// Delete old WATCard
+	delete fCard;
+
 	// Create new WATCard
+	fCard = cardOffice.create(id, 5, card);
       }
-    } // while
+    } // while loop
   L1:; // Successfully bought soda
     // Drink soda
 
-  } // for
+  } // for loop
 }
 
 
