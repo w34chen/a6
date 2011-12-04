@@ -5,20 +5,32 @@
 #include <vector>
 
 #include "WATCard.h"
+#include "Bank.h"
+#include "Printer.h"
 
 _Task WATCardOffice {
   struct Args {
-    
+    unsigned int id;
+    unsigned int amount;
+    WATCard* watcard;
   };
     struct Job {				// marshalled arguments and return future
 	Args args;				// call arguments (YOU DEFINE "Args")
 	FWATCard result;			// return future
 	Job( Args args ) : args( args ) {}
     };
-    _Task Courier { 
-      //communicate with bank
+    _Task Courier { //communicate with bank
+      Bank& bank;
+
+      void main() {
+	// Request work
+	
+	// Randomly lost WATCard 
+      }
+    Courier(Bank& bank) : bank(bank) {
+      }
       
-    };			// communicates with bank
+    };
 
     void main();
 

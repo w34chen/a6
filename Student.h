@@ -13,7 +13,7 @@ _Task Student {
     
     Printer& printer;
     NameServer& nameServer;
-    WATCardOffice cardOffice;
+    WATCardOffice& cardOffice;
     unsigned int id;
     unsigned int maxPurchases;
   public:

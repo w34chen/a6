@@ -1,5 +1,6 @@
 #include <uC++.h>
 
+#include "mprng.h"
 #include "Parent.h"
 
 Parent::Parent( Printer &prt, Bank &bank, unsigned int numStudents, unsigned int parentalDelay ) :
@@ -20,13 +21,20 @@ void Parent::main() {
   // (Hence, the parent is busy waiting for the call to its destructor.)
 
   for (;;) {
-    _Accept (~Parent()) {
+    _Accept (~Parent) {
       break;
     }
     else {
-      // generate money to give
-      // yield
+      // randomly generate amount of money to give
+      unsigned int amount = mprng() % 3 + 1;
       
+      //randomly generate which student to give money to
+      unsigned int studentId = mprng() % numStudents;
+
+      // yield for parentalDelay
+      yield(parentalDelay);
+
+      bank.deposit(studentId, amount);
     }
   }
 }
