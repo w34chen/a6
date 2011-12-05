@@ -19,6 +19,7 @@ void uMain::main() {
 
 	unsigned int numStudents=2, numVendingMachines=2, numCouriers=1;
 	unsigned int maxPurchases = 3, parentalDelay = 20;
+	unsigned int SodaCost = 1, MaxStockPerFlavour = 5, MaxShippedPerFlavour = 6, TimeBetweenShipments = 5;
 	
 	unsigned int seed = 3;
 
