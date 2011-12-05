@@ -26,21 +26,24 @@ void Truck::main() {
 			pPrt->print(Printer::Truck, 'd', machineList[i]->getId(), cargo[0]+cargo[1]+cargo[2]+cargo[3]);
 			for (unsigned int j = 0; j < 4; j++) { //loop through all flavours
 				addStock = maxStockPerFlavour - currentStock[j]; //amount to replenish
-				//cout <<j <<" cargo: " <<cargo[j] <<" currentStock: " <<&currentStock[j] <<" addStock " <<addStock <<endl;
-				if (cargo[j] > addStock) {
-					currentStock[j] = addStock;
-				} else {
-					currentStock[j] = cargo[j];
-					notReplenished += maxStockPerFlavour - currentStock[j];
+				//cout <<j <<" cargo: " <<cargo[j] <<" currentStock: " <<currentStock[j] <<" addStock " <<addStock <<endl;
+				if (addStock) {
+						if (cargo[j] > addStock) {
+						currentStock[j] += addStock;
+						cargo[j] -= addStock;
+					} else {
+						currentStock[j] += cargo[j];
+						cargo[j] = 0;
+						notReplenished += maxStockPerFlavour - currentStock[j];
+					}
 				}
-				cargo[j] -= currentStock[j];
-				//cout <<" cargo left " <<cargo[j] <<endl;
+				//cout <<" cargo left " <<cargo[j] <<" new currentStock: " <<currentStock[j]<<endl;
 			}
 			if (notReplenished)
 				pPrt->print(Printer::Truck, 'U', machineList[i]->getId(), notReplenished);
 			else
 				pPrt->print(Printer::Truck, 'D', machineList[i]->getId(), cargo[0]+cargo[1]+cargo[2]+cargo[3]);
-			//*machineList[i]->restocked(); //don't knwo what's wrong with this line! =(
+			machineList[i]->restocked(); //don't knwo what's wrong with this line! =(
 		}
 	}
 	pPrt->print(Printer::Truck, 'F');
