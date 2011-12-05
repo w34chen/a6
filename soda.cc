@@ -13,12 +13,14 @@
 
 MPRNG mprng_;
 
+using namespace std;
+
 void uMain::main() {
 
 	unsigned int numStudents=2, numVendingMachines=2, numCouriers=1;
 	unsigned int maxPurchases = 3, parentalDelay = 20;
 	
-	seed = 3;
+	unsigned int seed = 3;
 
 	mprng_.seed(seed);
 
