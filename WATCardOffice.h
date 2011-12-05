@@ -3,7 +3,7 @@
 
 #include <uC++.h>
 #include <vector>
-#include <stack>
+#include <list>
 #include <iostream>
 
 #include "WATCard.h"
@@ -19,10 +19,9 @@ _Task WATCardOffice {
   struct Args {
     unsigned int id;
     unsigned int amount;
-    WATCard* &watcard;
-    bool isNew;
-  Args( unsigned int id, unsigned int amount, WATCard* &watcard, bool isNew) :
-    id(id), amount(amount), watcard(watcard), isNew(isNew) { }
+    WATCard* watcard;
+  Args( unsigned int id, unsigned int amount, WATCard* watcard) :
+    id(id), amount(amount), watcard(watcard){ }
   };
 
     struct Job {				// marshalled arguments and return future
@@ -50,7 +49,6 @@ _Task WATCardOffice {
 		  cout <<"inside courier: " <<id <<endl;
 	    // Request work
 	    job = cardOffice->requestWork();
-	    cout <<"courier requested work" <<endl;
 	    // Extract parameters from job
 	    unsigned int sid = job->args.id;
 	    unsigned int amount = job->args.amount;
@@ -63,9 +61,6 @@ _Task WATCardOffice {
 	    bank.withdraw(sid, amount);
 	    cout <<"about to deposit to watcard" <<endl;
 
-	    // If it is a job of create, create the new watcard first
-	   // if (job->args.isNew)
-	   //   watcard = new WATCard();
 	    // Deposit money into watcard
 	    watcard->deposit(amount);
 
@@ -78,11 +73,10 @@ _Task WATCardOffice {
 	    	cout <<"lost watcard" <<endl;
 	      Lost* lost = new Lost();
 	      job->result.exception(lost);
+	    } else {
+	      // Deliver the real watcard pointer for the future
+	      job->result.delivery(watcard);
 	    }
-	    cout <<id <<"about to delivery results" <<endl;
-	    // Deliver the real watcard pointer for the future
-	    job->result.delivery(watcard);
-	    cout <<"done delivery, delete job" <<endl;
 	    delete job;
 	  } // else
 	} // for loop
@@ -102,7 +96,7 @@ _Task WATCardOffice {
     Bank &bank;
     unsigned int numCouriers;
     std::vector<Courier*> workers;
-    std::stack<Job*> jobs;
+    std::list<Job*> jobs;
   public:
     _Event Lost {};
     WATCardOffice( Printer &prt, Bank &bank, unsigned int numCouriers );

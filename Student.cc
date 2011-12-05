@@ -1,4 +1,5 @@
 #include <uC++.h>
+#include <iostream>
 
 #include "Student.h"
 #include "NameServer.h"
@@ -9,6 +10,8 @@
 using namespace std;
 
 extern MPRNG mprng_;
+
+using namespace std;
 
 void Student::main() {
   // Generate how many times student is going to purchase soda
@@ -57,14 +60,18 @@ void Student::main() {
 	  } else { // status == BUY, successful purchase
 		  cout <<id <<" status is normal" <<endl;
 	    goto L1; // jump out of buying loop
-	  }	
+	  }
+	  
+	  // Yield before purchase soda
+	  unsigned int yieldTime = mprng_(1, 10);
+	  yield(yieldTime);
 	}
       } catch (WATCardOffice::Lost) {
 	// WATCard is lost
 	// Printer: Student Watcard is lost
     	  cout <<"watcard is lost" <<endl;
 	printer.print(Printer::Student, id, 'L');
-
+	
 	// Delete old WATCard
 	delete card;
 

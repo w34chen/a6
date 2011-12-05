@@ -12,13 +12,13 @@ void WATCardOffice::main() {
     // Always accept transfer
     _Accept(create) {
       // Printer::Creation Complete
-      printer.print(Printer::WATCardOffice, 'C', jobs.top()->args.id, jobs.top()->args.amount);
+      printer.print(Printer::WATCardOffice, 'C', jobs.front()->args.id, jobs.front()->args.amount);
     }
     or _Accept(transfer) {
       // Printer::Transfer Complete
-      printer.print(Printer::WATCardOffice, 'T', jobs.top()->args.id, jobs.top()->args.amount);
+      printer.print(Printer::WATCardOffice, 'T', jobs.front()->args.id, jobs.front()->args.amount);
     }
-    or _When (jobs.size() != 0) _Accept (requestWork) {
+    or _When (!jobs.empty()) _Accept (requestWork) {
       // Only accept request from courier when there is job
       // Printer::Courier Complete
       printer.print(Printer::WATCardOffice, 'W');
@@ -39,17 +39,11 @@ WATCardOffice::WATCardOffice( Printer &prt, Bank &bank, unsigned int numCouriers
  
 FWATCard WATCardOffice::create( unsigned int sid, unsigned int amount, WATCard *&card ) {
   // Student create WATCard though output parameter card with initial balance
-  // Sufficient fund is obtained from bank
-  //cout <<sid <<" create watcard with amount " <<amount <<endl;
-//	bank.withdraw(sid, amount);
-  cout <<sid <<"'s create withdrew from bank" <<endl;
-
+  card = new WATCard();
   // Create job for this create
-  Args arg(sid, amount, card, true);
+  Args arg(sid, amount, card);
   Job* job = new Job(arg);
-  //cout <<sid <<"'s create about to push job" <<endl;
-  jobs.push(job);
-  //cout <<sid <<"'s create pushed job" <<endl;
+  jobs.push_back(job);
   // Future WATCard is returned
   return job->result;
 }
@@ -62,20 +56,19 @@ FWATCard WATCardOffice::transfer( unsigned int sid, unsigned int amount, WATCard
 	cout <<sid <<"'s transfer withdrew from bank" <<endl;
 
   // Create job for this transfer
-  Args arg(sid, amount, card, false);
+  Args arg(sid, amount, card);
   Job* job = new Job(arg);
-  //cout <<sid <<"'s transfer: about to push job" <<endl;
-  jobs.push(job);
-  //cout <<sid <<"'s transfer: pushed job" <<endl;
+  
+  jobs.push_back(job);
   // future WATCard is returned
   return job->result;
 }
  
 WATCardOffice::Job* WATCardOffice::requestWork() {
   // Courier request work
-  Job* job = jobs.top();
-  jobs.pop();
-
+  Job* job = jobs.front();
+  jobs.pop_front();
+  
   return job;
 }
 
