@@ -3,7 +3,7 @@
 
 #include <uC++.h>
 #include <vector>
-#include <stack>
+#include <list>
 #include <iostream>
 
 #include "WATCard.h"
@@ -17,10 +17,9 @@ _Task WATCardOffice {
   struct Args {
     unsigned int id;
     unsigned int amount;
-    WATCard* &watcard;
-    bool isNew;
-  Args( unsigned int id, unsigned int amount, WATCard* &watcard, bool isNew) :
-    id(id), amount(amount), watcard(watcard), isNew(isNew) { }
+    WATCard* watcard;
+  Args( unsigned int id, unsigned int amount, WATCard* watcard) :
+    id(id), amount(amount), watcard(watcard){ }
   };
 
     struct Job {				// marshalled arguments and return future
@@ -47,7 +46,7 @@ _Task WATCardOffice {
 	  else {
 	    // Request work
 	    job = cardOffice->requestWork();
-	  
+	    
 	    // Extract parameters from job
 	    unsigned int sid = job->args.id;
 	    unsigned int amount = job->args.amount;
@@ -58,10 +57,6 @@ _Task WATCardOffice {
 	    
 	    // Transfer fond from bank
 	    bank.withdraw(id, amount);
-
-	    // If it is a job of create, create the new watcard first
-	    if (job->args.isNew)
-	      watcard = new WATCard();
 
 	    // Deposit money into watcard
 	    watcard->deposit(amount);
@@ -74,10 +69,10 @@ _Task WATCardOffice {
 	    if (loseWATCard) {
 	      Lost* lost = new Lost();
 	      job->result.exception(lost);
+	    } else {
+	      // Deliver the real watcard pointer for the future
+	      job->result.delivery(watcard);
 	    }
-
-	    // Deliver the real watcard pointer for the future
-	    job->result.delivery(watcard);
 
 	    delete job;
 	  } // else
@@ -98,7 +93,7 @@ _Task WATCardOffice {
     Bank &bank;
     unsigned int numCouriers;
     std::vector<Courier*> workers;
-    std::stack<Job*> jobs;
+    std::list<Job*> jobs;
   public:
     _Event Lost {};
     WATCardOffice( Printer &prt, Bank &bank, unsigned int numCouriers );
