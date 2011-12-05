@@ -59,11 +59,12 @@ _Task WATCardOffice {
 	    // Transfer fond from bank
 	    bank.withdraw(id, amount);
 
-	    std::cout << "before courier deposit" << std::endl;
-	    watcard = new WATCard();
+	    // If it is a job of create, create the new watcard first
+	    if (job->args.isNew)
+	      watcard = new WATCard();
+
 	    // Deposit money into watcard
 	    watcard->deposit(amount);
-	    std::cout << "after courier deposit to card" << std::endl;
 
 	    // Pinter:Courier Complete fund transfer
 	    printer.print(Printer::Courier, id, 'T', id, amount);
