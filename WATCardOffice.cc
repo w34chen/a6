@@ -34,7 +34,7 @@ WATCardOffice::WATCardOffice( Printer &prt, Bank &bank, unsigned int numCouriers
   // Create fixed-sized courier pool 
   //   with numCouriers
   for (unsigned int i = 0; i < numCouriers; i ++) {
-    Courier *temp = new Courier(bank, this, printer);
+    Courier *temp = new Courier(bank, this, printer, i);
     workers.push_back(temp);
   }
 }
