@@ -28,7 +28,7 @@ Printer::Printer(unsigned int numStudents, unsigned int numVendingMachines, unsi
 		cout  <<"Stud:" <<i <<"\t";
 	for (unsigned int i = 0; i < numVendingMachines; i++)
 		cout  <<"Mach:" <<i <<"\t";
-	for (unsigned int i = 0; i < numVendingMachines; i++)
+	for (unsigned int i = 0; i < numCouriers; i++)
 		cout  <<"Cour:" <<i <<"\t";
 	cout <<endl;
 

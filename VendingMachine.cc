@@ -17,9 +17,9 @@ VendingMachine::VendingMachine( Printer &prt, NameServer &nameServer, unsigned i
 VendingMachine::Status VendingMachine::buy( Flavours flavour, WATCard &card ) {
 	if (!stock[(int)flavour])
 		return STOCK;
-	//if (card.getBalance() < Cost)
-	//	return FUND;
-	//card.withdraw(Cost);
+	if (card.getBalance() < Cost)
+		return FUNDS;
+	card.withdraw(Cost);
 	stock[(int)flavour]--;
 	pPrt->print(Printer::Vending, ID, 'B');
 	return BUY;
