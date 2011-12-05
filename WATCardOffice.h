@@ -49,12 +49,12 @@ _Task WATCardOffice {
 	    job = cardOffice->requestWork();
 	  
 	    // Extract parameters from job
-	    unsigned int id = job->args.id;
+	    unsigned int sid = job->args.id;
 	    unsigned int amount = job->args.amount;
 	    WATCard* &watcard = job->args.watcard;
 	    
 	    // Pinter:Courier Start fund transfer
-	    printer.print(Printer::Courier, id, 't', id, amount);
+	    printer.print(Printer::Courier, id, 't', sid, amount);
 	    
 	    // Transfer fond from bank
 	    bank.withdraw(id, amount);
@@ -67,7 +67,7 @@ _Task WATCardOffice {
 	    watcard->deposit(amount);
 
 	    // Pinter:Courier Complete fund transfer
-	    printer.print(Printer::Courier, id, 'T', id, amount);
+	    printer.print(Printer::Courier, id, 'T', sid, amount);
 
 	    // Randomly lost WATCard
 	    bool loseWATCard = ( mprng_(6) == 0);
