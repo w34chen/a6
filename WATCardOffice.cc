@@ -3,8 +3,6 @@
 
 #include "WATCardOffice.h"
 
-using namespace std;
-
 void WATCardOffice::main() {
   // Printer: WATCardOffice Start
   printer.print(Printer::WATCardOffice, 'S');
@@ -42,17 +40,18 @@ WATCardOffice::WATCardOffice( Printer &prt, Bank &bank, unsigned int numCouriers
 FWATCard WATCardOffice::create( unsigned int sid, unsigned int amount, WATCard *&card ) {
   // Student create WATCard though output parameter card with initial balance
   // Sufficient fund is obtained from bank
-  bank.withdraw(sid, amount);
-  
+  //cout <<sid <<" create watcard with amount " <<amount <<endl;
+//	bank.withdraw(sid, amount);
+  cout <<sid <<"'s create withdrew from bank" <<endl;
   // Create job for this create
   Args arg;
   arg.id = sid;
   arg.amount = amount;
   arg.watcard = card;
   Job* job = new Job(arg);
-  
+  //cout <<sid <<"'s create about to push job" <<endl;
   jobs.push(job);
-
+  //cout <<sid <<"'s create pushed job" <<endl;
   // Future WATCard is returned
   return job->result;
 }
@@ -60,17 +59,18 @@ FWATCard WATCardOffice::create( unsigned int sid, unsigned int amount, WATCard *
 FWATCard WATCardOffice::transfer( unsigned int sid, unsigned int amount, WATCard *card ) {
   // Student call to transfer when its WATCard has insufficient funds
   // Sufficient fund is obtained from bank
-  bank.withdraw(sid, amount);
-
+  //cout <<sid <<"s transfer, about to withdraw " <<amount <<" from bank"<<endl;
+//	bank.withdraw(sid, amount);
+	cout <<sid <<"'s transfer withdrew from bank" <<endl;
   // Create job for this transfer
   Args arg;
   arg.id = sid;
   arg.amount = amount;
   arg.watcard = card;
   Job* job = new Job(arg);
-  
+  //cout <<sid <<"'s transfer: about to push job" <<endl;
   jobs.push(job);
-
+  //cout <<sid <<"'s transfer: pushed job" <<endl;
   // future WATCard is returned
   return job->result;
 }

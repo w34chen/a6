@@ -11,6 +11,8 @@
 #include "Printer.h"
 #include "mprng.h"
 
+using namespace std;
+
 extern MPRNG mprng_;
 
 _Task WATCardOffice {
@@ -42,9 +44,10 @@ _Task WATCardOffice {
 	    printer.print(Printer::Courier, id, 'F');	    
 	  }
 	  else {
+		  cout <<"inside courier: " <<id <<endl;
 	    // Request work
 	    job = cardOffice->requestWork();
-	  
+	    cout <<"courier requested work" <<endl;
 	    // Extract parameters from job
 	    unsigned int id = job->args.id;
 	    unsigned int amount = job->args.amount;
@@ -52,10 +55,10 @@ _Task WATCardOffice {
 	    
 	    // Pinter:Courier Start fund transfer
 	    printer.print(Printer::Courier, id, 't', id, amount);
-	    
+	    cout <<id <<" about to withdraw from bank " <<endl;
 	    // Transfer fond from bank
 	    bank.withdraw(id, amount);
-
+	    cout <<id <<" about to deposit to watcard" <<endl;
 	    // Deposit money into watcard
 	    watcard->deposit(amount);
 
@@ -65,13 +68,14 @@ _Task WATCardOffice {
 	    // Randomly lost WATCard
 	    bool loseWATCard = ( mprng_(6) == 0);
 	    if (loseWATCard) {
+	    	cout <<id <<" lost watcard" <<endl;
 	      Lost* lost = new Lost();
 	      job->result.exception(lost);
 	    }
-
+	    cout <<id <<"about to delivery results" <<endl;
 	    // Deliver the real watcard pointer for the future
 	    job->result.delivery(watcard);
-
+	    cout <<id <<"done delivery, delete job" <<endl;
 	    delete job;
 	  } // else
 	} // for loop

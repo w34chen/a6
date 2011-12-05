@@ -2,6 +2,9 @@
 
 #include "mprng.h"
 #include "Parent.h"
+#include <iostream>
+
+using namespace std;
 
 extern MPRNG mprng_;
 
@@ -32,16 +35,18 @@ void Parent::main() {
       break;
     }
     else {
+      cout <<"inside parent's main" <<endl;
       // randomly generate amount of money to give
       unsigned int amount = mprng_(1, 3);
       
       //randomly generate which student to give money to
       unsigned int studentId = mprng_(numStudents - 1);
-
+      cout <<"depot " <<amount <<" into " <<studentId <<" student then yield" <<endl;
       // yield for parentalDelay
       yield(parentalDelay);
-
+      cout <<"parent about to deposit" <<endl;
       bank.deposit(studentId, amount);
+      cout <<"parent just deposited" <<endl;
       // Printer:: Parent Deposit gift to Student and Amount
       printer.print(Printer::Parent, 'D', studentId, amount);
     }

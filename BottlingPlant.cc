@@ -1,14 +1,17 @@
 #include "BottlingPlant.h"
 #include "Truck.h"
+#include "mprng.h"
 
 using namespace std;
+
+extern MPRNG mprng_;
 
 bool BottlingPlant::getShipment( unsigned int cargo[] ) {
 	//if closing, return true;
 	for (int i = 0; i < 4; i++)
 		cargo[i] = producedStock[i];
 	pickup.signal();
-	//cout <<"bottling plant get shipment: unblocked" <<endl;
+	cout <<"bottling plant get shipment: unblocked" <<endl;
     return false;
 }
 
@@ -16,11 +19,14 @@ void BottlingPlant::main() {
 	pPrt->print(Printer::BottlingPlant, 'S');
 	Truck truck(*pPrt, *server, *this, numVendingMachines, maxStockPerFlavour);
 	for (;;) {
-		//cout <<"bottling plant main loop: about to yield " <<endl;
+		_Accept(~BottlingPlant) {
+			break;
+		}
+		cout <<"bottling plant main loop: about to yield " <<endl;
 		yield(timeBetweenShipments);
 		for (int i = 0; i < 4; i++) {
-			producedStock[i] = rand()%maxShippedPerFlavour;
-			//cout <<"produced " <<i <<" flavour with quantity " <<producedStock[i] <<endl;
+			producedStock[i] = mprng_(0, maxShippedPerFlavour);
+			cout <<"produced " <<i <<" flavour with quantity " <<producedStock[i] <<endl;
 		}
 		pPrt->print(Printer::BottlingPlant, 'G', producedStock[0]+producedStock[1]+producedStock[2]+producedStock[3]);
 		pickup.wait();
