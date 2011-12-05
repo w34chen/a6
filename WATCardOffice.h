@@ -52,37 +52,37 @@ _Task WATCardOffice {
 	    job = cardOffice->requestWork();
 	    cout <<"courier requested work" <<endl;
 	    // Extract parameters from job
-	    unsigned int id = job->args.id;
+	    unsigned int sid = job->args.id;
 	    unsigned int amount = job->args.amount;
 	    WATCard* &watcard = job->args.watcard;
 	    
 	    // Pinter:Courier Start fund transfer
-	    printer.print(Printer::Courier, id, 't', id, amount);
-	    cout <<id <<" about to withdraw from bank " <<endl;
+	    printer.print(Printer::Courier, id, 't', sid, amount);
+	    cout <<"about to withdraw from bank " <<endl;
 	    // Transfer fond from bank
-	    bank.withdraw(id, amount);
-	    cout <<id <<" about to deposit to watcard" <<endl;
+	    bank.withdraw(sid, amount);
+	    cout <<"about to deposit to watcard" <<endl;
 
 	    // If it is a job of create, create the new watcard first
-	    if (job->args.isNew)
-	      watcard = new WATCard();
+	   // if (job->args.isNew)
+	   //   watcard = new WATCard();
 	    // Deposit money into watcard
 	    watcard->deposit(amount);
 
 	    // Pinter:Courier Complete fund transfer
-	    printer.print(Printer::Courier, id, 'T', id, amount);
+	    printer.print(Printer::Courier, id, 'T', sid, amount);
 
 	    // Randomly lost WATCard
 	    bool loseWATCard = ( mprng_(6) == 0);
 	    if (loseWATCard) {
-	    	cout <<id <<" lost watcard" <<endl;
+	    	cout <<"lost watcard" <<endl;
 	      Lost* lost = new Lost();
 	      job->result.exception(lost);
 	    }
 	    cout <<id <<"about to delivery results" <<endl;
 	    // Deliver the real watcard pointer for the future
 	    job->result.delivery(watcard);
-	    cout <<id <<"done delivery, delete job" <<endl;
+	    cout <<"done delivery, delete job" <<endl;
 	    delete job;
 	  } // else
 	} // for loop

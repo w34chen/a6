@@ -22,7 +22,7 @@ void Student::main() {
   printer.print(Printer::Student, id, 'S', favFlavour, numOfSoda);
 
   // Create a new WATCard with $5 balance
-  WATCard* card;
+  WATCard* card = new WATCard();
   FWATCard fCard = cardOffice.create(id, 5, card);
   cout <<id <<" created watcard " <<endl;
   // Obtain location to vending machine from name server

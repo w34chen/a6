@@ -20,5 +20,5 @@ void Bank::withdraw( unsigned int id, unsigned int amount ) {
 	cout <<"withdraw from " <<id <<" with " <<amount <<endl;
   while (accounts.at(id) < amount) _Accept(deposit);
   accounts.at(id) -= amount;
-  cout <<" withdrawn amount is " <<accounts.at(id) <<endl;
+  cout <<id <<" withdrawn amount is " <<accounts.at(id) <<endl;
 }
