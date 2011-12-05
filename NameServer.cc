@@ -24,7 +24,7 @@ void NameServer::VMregister( VendingMachine *vendingmachine ) {
 VendingMachine * NameServer::getMachine( unsigned int id ) {
 	VendingMachine *get = machineList[studVend[id]];
 	pPrt->print(Printer::NameServer, 'N', id, get->getId());
-	studVend[id]++;
+	studVend[id] = (studVend[id]+1)%(addedMachines-1);
 	return get;
 }
 VendingMachine ** NameServer::getMachineList() {
