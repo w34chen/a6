@@ -4,6 +4,7 @@
 #include <uC++.h>
 #include <vector>
 #include <stack>
+#include <iostream>
 
 #include "WATCard.h"
 #include "Bank.h"

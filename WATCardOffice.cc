@@ -1,6 +1,9 @@
 #include <uC++.h>
+#include <iostream>
 
 #include "WATCardOffice.h"
+
+using namespace std;
 
 void WATCardOffice::main() {
   // Printer: WATCardOffice Start
