@@ -7,8 +7,7 @@ WATCard::WATCard() {
 }
 
 void WATCard::deposit( unsigned int amount ) {
-  // use courier to deposit
-  
+  // use courier to deposit  
   balance += amount;
 }
 

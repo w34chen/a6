@@ -17,7 +17,10 @@ _Task WATCardOffice {
   struct Args {
     unsigned int id;
     unsigned int amount;
-    WATCard* watcard;
+    WATCard* &watcard;
+    bool isNew;
+  Args( unsigned int id, unsigned int amount, WATCard* &watcard, bool isNew) :
+    id(id), amount(amount), watcard(watcard), isNew(isNew) { }
   };
 
     struct Job {				// marshalled arguments and return future
@@ -48,7 +51,7 @@ _Task WATCardOffice {
 	    // Extract parameters from job
 	    unsigned int id = job->args.id;
 	    unsigned int amount = job->args.amount;
-	    WATCard* watcard = job->args.watcard;
+	    WATCard* &watcard = job->args.watcard;
 	    
 	    // Pinter:Courier Start fund transfer
 	    printer.print(Printer::Courier, id, 't', id, amount);
@@ -56,8 +59,11 @@ _Task WATCardOffice {
 	    // Transfer fond from bank
 	    bank.withdraw(id, amount);
 
+	    std::cout << "before courier deposit" << std::endl;
+	    watcard = new WATCard();
 	    // Deposit money into watcard
 	    watcard->deposit(amount);
+	    std::cout << "after courier deposit to card" << std::endl;
 
 	    // Pinter:Courier Complete fund transfer
 	    printer.print(Printer::Courier, id, 'T', id, amount);
