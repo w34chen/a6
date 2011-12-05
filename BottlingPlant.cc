@@ -1,27 +1,35 @@
 #include "BottlingPlant.h"
 #include "Truck.h"
+#include "mprng.h"
 
 using namespace std;
+
+extern MPRNG mprng_;
 
 bool BottlingPlant::getShipment( unsigned int cargo[] ) {
 	if (destruct) {
 		cout <<"get shipment return true" <<endl;
+		pickup.signal();
 		return true;
 	}
 	for (int i = 0; i < 4; i++)
 		cargo[i] = producedStock[i];
 	pickup.signal();
-	//cout <<"bottling plant get shipment: unblocked" <<endl;
+	cout <<"bottling plant get shipment: unblocked" <<endl;
     return false;
+}
+
+BottlingPlant::~BottlingPlant() {
+	destruct = true;
+	pickup.wait();
+	delete(truck);
 }
 
 void BottlingPlant::main() {
 	pPrt->print(Printer::BottlingPlant, 'S');
-	Truck truck(*pPrt, *server, *this, numVendingMachines, maxStockPerFlavour);
+	truck = new Truck(*pPrt, *server, *this, numVendingMachines, maxStockPerFlavour);
 	for (;;) {
 		_Accept(~BottlingPlant) {
-			destruct = true;
-			cout <<"destruct bottlingPlant" <<endl;
 			break;
 		} or _Accept (getShipment) {
 			//cout <<"bottling plant main loop: about to yield " <<endl;

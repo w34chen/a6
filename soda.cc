@@ -66,12 +66,12 @@ void uMain::main() {
 
 	NameServer nameServer(prt, config.numVendingMachines, config.numStudents );
 
-	VendingMachine *vendingMachine[config.numVendingMachines];
-	for (unsigned int i = 0; i < config.numVendingMachines; i++)
-		vendingMachine[i] = new VendingMachine(prt, nameServer, i, config.sodaCost, config.maxStockPerFlavour );
-	cout <<"umain: max stock per flavour: " <<config.maxStockPerFlavour <<endl;
-	BottlingPlant *bottlingPlant = new BottlingPlant(prt, nameServer, config.numVendingMachines,config.maxShippedPerFlavour,
-			config.maxStockPerFlavour, config.timeBetweenShipments ); //truck is created by the bottling plant
+	VendingMachine *vendingMachine[numVendingMachines];
+	for (unsigned int i = 0; i < numVendingMachines; i++)
+		vendingMachine[i] = new VendingMachine(prt, nameServer, i, SodaCost, MaxStockPerFlavour );
+	//cout <<"umain: max stock per flavour: " <<MaxStockPerFlavour <<endl;
+	BottlingPlant *bottlingPlant = new BottlingPlant(prt, nameServer, numVendingMachines,MaxShippedPerFlavour,
+			MaxStockPerFlavour, TimeBetweenShipments ); //truck is created by the bottling plant
 
 	Student *student[config.numStudents];
 	for (unsigned int i = 0; i < config.numStudents; i++)

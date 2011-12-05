@@ -75,6 +75,7 @@ void Printer::print(Kind kind, char state, int value1, int value2) {
 }
 
 void Printer::print(Kind kind, unsigned int lid, char state) {
+	cout <<"print " <<kind <<" lid " <<lid <<" state " <<state <<endl;
 	unsigned int index;
 	//only flush if there is a change in state
 	if (kind == Student)

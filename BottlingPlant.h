@@ -14,6 +14,7 @@ _Task BottlingPlant {
 	unsigned int maxStockPerFlavour;
 	unsigned int timeBetweenShipments;
 	unsigned int producedStock[4];
+	Truck *truck;
 	uCondition pickup;
 	bool destruct;
     void main();
@@ -29,6 +30,7 @@ _Task BottlingPlant {
     	destruct = false;
     };
     bool getShipment( unsigned int cargo[] );
+    ~BottlingPlant();
 };
 
 #endif // BOTTLINGPLANT_H

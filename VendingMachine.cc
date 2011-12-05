@@ -15,8 +15,10 @@ VendingMachine::VendingMachine( Printer &prt, NameServer &nameServer, unsigned i
 }
 
 VendingMachine::Status VendingMachine::buy( Flavours flavour, WATCard &card ) {
+	cout <<"buy" <<endl;
 	if (!stock[(int)flavour])
 		return STOCK;
+	cout <<"buy2" <<endl;
 	if (card.getBalance() < Cost)
 		return FUNDS;
 	card.withdraw(Cost);

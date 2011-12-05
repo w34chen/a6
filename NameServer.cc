@@ -16,13 +16,14 @@ NameServer::NameServer( Printer &prt, unsigned int numVendingMachines,
 }
 void NameServer::VMregister( VendingMachine *vendingmachine ) {
 	unsigned int id = vendingmachine->getId();
-	cout <<"registering " <<id <<" machine" <<endl;
+	//cout <<"registering " <<id <<" machine" <<endl;
 	pPrt->print(Printer::NameServer, 'R', id);
 	machineList[addedMachines] = vendingmachine;
 	addedMachines++;
 }
 VendingMachine * NameServer::getMachine( unsigned int id ) {
-	VendingMachine *get = machineList[studVend[id]];
+	VendingMachine *get;
+	get = machineList[studVend[id]];
 	pPrt->print(Printer::NameServer, 'N', id, get->getId());
 	studVend[id] = (studVend[id]+1)%(addedMachines-1);
 	return get;
