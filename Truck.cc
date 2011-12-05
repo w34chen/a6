@@ -9,6 +9,9 @@ void Truck::main() {
     unsigned int notReplenished;
 	pPrt->print(Printer::Truck, 'S');
 	for (;;) {
+		//_Accept(~Truck) {
+		//	break;
+		//}
 		//obtain location of vending machine from name server
 		VendingMachine **machineList = server->getMachineList();
 		//cout <<"truck obtained vending machine list" <<endl;
@@ -17,16 +20,15 @@ void Truck::main() {
 		if (plant->getShipment(cargo))
 			break;
 		pPrt->print(Printer::Truck, 'P', cargo[0]+cargo[1]+cargo[2]+cargo[3]);
-		cout <<"truck obtained shipment with cargo " <<cargo[0] <<" " <<cargo[1] <<" "
-				<<cargo[2] <<" " <<cargo[3] <<endl;
+		//cout <<"truck obtained shipment with cargo " <<cargo[0] <<" " <<cargo[1] <<" "
+		//		<<cargo[2] <<" " <<cargo[3] <<endl;
 		for (unsigned int i = 0; i < numVendingMachines; i++){ //loop through all machines
-			cout <<"truck: machine " <<i <<endl;
+			//cout <<"truck: machine " <<i <<endl;
 			notReplenished = 0;
 			currentStock = &(*machineList[i]->inventory());  //get existing amount in machines
 			pPrt->print(Printer::Truck, 'd', machineList[i]->getId(), cargo[0]+cargo[1]+cargo[2]+cargo[3]);
 			for (unsigned int j = 0; j < 4; j++) { //loop through all flavours
 				addStock = maxStockPerFlavour - currentStock[j]; //amount to replenish
-<<<<<<< HEAD
 				//cout <<j <<" cargo: " <<cargo[j] <<" currentStock: " <<currentStock[j] <<" addStock " <<addStock <<endl;
 				if (addStock) {
 						if (cargo[j] > addStock) {
@@ -39,18 +41,6 @@ void Truck::main() {
 					}
 				}
 				//cout <<" cargo left " <<cargo[j] <<" new currentStock: " <<currentStock[j]<<endl;
-=======
-				cout <<j <<" cargo: " <<cargo[j] <<" currentStock: " <<currentStock[j] <<" addStock " <<addStock <<endl;
-				if (cargo[j] > addStock) {
-					currentStock[j] += addStock;
-					cargo[j] -= addStock;
-				} else {
-					currentStock[j] += cargo[j];
-					cargo[j] = 0;
-					notReplenished += maxStockPerFlavour - currentStock[j];
-				}
-				cout <<" cargo left " <<cargo[j] <<" new currentStock: " <<currentStock[j]<<endl;
->>>>>>> 4fe906cc6ba06318686636b6ff6661be5778bb74
 			}
 			if (notReplenished)
 				pPrt->print(Printer::Truck, 'U', machineList[i]->getId(), notReplenished);
