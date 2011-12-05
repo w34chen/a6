@@ -60,7 +60,7 @@ void Student::main() {
 	printer.print(Printer::Student, 'L');
 
 	// Delete old WATCard
-	delete fCard;
+	delete card;
 
 	// Create new WATCard
 	fCard = cardOffice.create(id, 5, card);

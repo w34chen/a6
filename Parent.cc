@@ -36,7 +36,7 @@ void Parent::main() {
       unsigned int amount = mprng_(1, 3);
       
       //randomly generate which student to give money to
-      unsigned int studentId = mprng_(numStudents);
+      unsigned int studentId = mprng_(numStudents - 1);
 
       // yield for parentalDelay
       yield(parentalDelay);
