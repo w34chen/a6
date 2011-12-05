@@ -9,9 +9,6 @@ void Truck::main() {
     unsigned int notReplenished;
 	pPrt->print(Printer::Truck, 'S');
 	for (;;) {
-		//_Accept(~Truck) {
-		//	break;
-		//}
 		//obtain location of vending machine from name server
 		VendingMachine **machineList = server->getMachineList();
 		//cout <<"truck obtained vending machine list" <<endl;

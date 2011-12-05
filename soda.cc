@@ -38,7 +38,7 @@ void uMain::main() {
 	VendingMachine *vendingMachine[numVendingMachines];
 	for (unsigned int i = 0; i < numVendingMachines; i++)
 		vendingMachine[i] = new VendingMachine(prt, nameServer, i, SodaCost, MaxStockPerFlavour );
-	cout <<"umain: max stock per flavour: " <<MaxStockPerFlavour <<endl;
+
 	BottlingPlant *bottlingPlant = new BottlingPlant(prt, nameServer, numVendingMachines,MaxShippedPerFlavour,
 			MaxStockPerFlavour, TimeBetweenShipments ); //truck is created by the bottling plant
 
@@ -48,6 +48,7 @@ void uMain::main() {
 
 	for (unsigned int i = 0; i < numStudents; i++)
 		delete(student[i]);
+	cout <<"deleted students" <<endl;
 
 	delete(bottlingPlant);
 

@@ -15,6 +15,7 @@ _Task BottlingPlant {
 	unsigned int timeBetweenShipments;
 	unsigned int producedStock[4];
 	uCondition pickup;
+	bool destruct;
     void main();
   public:
     BottlingPlant( Printer &prt, NameServer &nameServer, unsigned int numVendingMachines,
@@ -24,7 +25,9 @@ _Task BottlingPlant {
     			numVendingMachines(numVendingMachines),
     			maxShippedPerFlavour(maxShippedPerFlavour),
     			maxStockPerFlavour(maxStockPerFlavour),
-    			timeBetweenShipments(timeBetweenShipments){};
+    			timeBetweenShipments(timeBetweenShipments) {
+    	destruct = false;
+    };
     bool getShipment( unsigned int cargo[] );
 };
 

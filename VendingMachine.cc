@@ -21,7 +21,7 @@ VendingMachine::Status VendingMachine::buy( Flavours flavour, WATCard &card ) {
 		return FUNDS;
 	card.withdraw(Cost);
 	stock[(int)flavour]--;
-	pPrt->print(Printer::Vending, ID, 'B');
+	pPrt->print(Printer::Vending, ID, 'B', flavour, stock[(int)flavour]--);
 	return BUY;
 }
 

@@ -50,8 +50,8 @@ void Printer::print(Kind kind, char state ) {
 		}
 		ch[(int)kind] = state;
 		flush();
-	}
-	ch[(int)kind] = state;
+	} else
+		ch[(int)kind] = state;
 
 }
 
@@ -93,8 +93,8 @@ void Printer::print(Kind kind, unsigned int lid, char state) {
 		}
 		ch[index] = state;
 		flush();
-	}
-	ch[index] = state;
+	} else
+		ch[index] = state;
 }
 
 void Printer::print(Kind kind, unsigned int lid, char state, int value1 ) {
