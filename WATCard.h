@@ -7,7 +7,6 @@
 class WATCard {
     WATCard( const WATCard & );			// prevent copying
     WATCard &operator=( const WATCard & );
-
     unsigned int balance;
   public:
     WATCard();

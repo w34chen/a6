@@ -69,7 +69,7 @@ void uMain::main() {
 	VendingMachine *vendingMachine[config.numVendingMachines];
 	for (unsigned int i = 0; i < config.numVendingMachines; i++)
 		vendingMachine[i] = new VendingMachine(prt, nameServer, i, config.sodaCost, config.maxStockPerFlavour );
-	cout <<"umain: max stock per flavour: " <<config.maxStockPerFlavour <<endl;
+	//cout <<"umain: max stock per flavour: " <<MaxStockPerFlavour <<endl;
 	BottlingPlant *bottlingPlant = new BottlingPlant(prt, nameServer, config.numVendingMachines,config.maxShippedPerFlavour,
 			config.maxStockPerFlavour, config.timeBetweenShipments ); //truck is created by the bottling plant
 
@@ -79,6 +79,7 @@ void uMain::main() {
 
 	for (unsigned int i = 0; i < config.numStudents; i++)
 		delete(student[i]);
+	cout <<"deleted students" <<endl;
 
 	delete(bottlingPlant);
 

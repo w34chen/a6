@@ -50,8 +50,8 @@ void Printer::print(Kind kind, char state ) {
 		}
 		ch[(int)kind] = state;
 		flush();
-	}
-	ch[(int)kind] = state;
+	} else
+		ch[(int)kind] = state;
 
 }
 
@@ -75,6 +75,7 @@ void Printer::print(Kind kind, char state, int value1, int value2) {
 }
 
 void Printer::print(Kind kind, unsigned int lid, char state) {
+	cout <<"print " <<kind <<" lid " <<lid <<" state " <<state <<endl;
 	unsigned int index;
 	//only flush if there is a change in state
 	if (kind == Student)
@@ -93,8 +94,8 @@ void Printer::print(Kind kind, unsigned int lid, char state) {
 		}
 		ch[index] = state;
 		flush();
-	}
-	ch[index] = state;
+	} else
+		ch[index] = state;
 }
 
 void Printer::print(Kind kind, unsigned int lid, char state, int value1 ) {
