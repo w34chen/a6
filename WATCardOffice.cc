@@ -12,11 +12,11 @@ void WATCardOffice::main() {
     // Always accept transfer
     _Accept(create) {
       // Printer::Creation Complete
-      printer.print(Printer::WATCardOffice, 'C');
+      printer.print(Printer::WATCardOffice, 'C', jobs.top()->args.id, jobs.top()->args.amount);
     }
     or _Accept(transfer) {
       // Printer::Transfer Complete
-      printer.print(Printer::WATCardOffice, 'T');
+      printer.print(Printer::WATCardOffice, 'T', jobs.top()->args.id, jobs.top()->args.amount);
     }
     or _When (jobs.size() != 0) _Accept (requestWork) {
       // Only accept request from courier when there is job
@@ -43,11 +43,9 @@ FWATCard WATCardOffice::create( unsigned int sid, unsigned int amount, WATCard *
   //cout <<sid <<" create watcard with amount " <<amount <<endl;
 //	bank.withdraw(sid, amount);
   cout <<sid <<"'s create withdrew from bank" <<endl;
+
   // Create job for this create
-  Args arg;
-  arg.id = sid;
-  arg.amount = amount;
-  arg.watcard = card;
+  Args arg(sid, amount, card, true);
   Job* job = new Job(arg);
   //cout <<sid <<"'s create about to push job" <<endl;
   jobs.push(job);
@@ -62,11 +60,9 @@ FWATCard WATCardOffice::transfer( unsigned int sid, unsigned int amount, WATCard
   //cout <<sid <<"s transfer, about to withdraw " <<amount <<" from bank"<<endl;
 //	bank.withdraw(sid, amount);
 	cout <<sid <<"'s transfer withdrew from bank" <<endl;
+
   // Create job for this transfer
-  Args arg;
-  arg.id = sid;
-  arg.amount = amount;
-  arg.watcard = card;
+  Args arg(sid, amount, card, false);
   Job* job = new Job(arg);
   //cout <<sid <<"'s transfer: about to push job" <<endl;
   jobs.push(job);
