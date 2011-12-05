@@ -6,6 +6,8 @@
 #include "Printer.h"
 #include "NameServer.h"
 
+_Task Truck;
+
 _Task BottlingPlant {
 	Printer *pPrt;
 	NameServer *server;
