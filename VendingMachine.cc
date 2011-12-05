@@ -43,12 +43,12 @@ _Nomutex unsigned int VendingMachine::cost() { return Cost; }
 _Nomutex unsigned int VendingMachine::getId() { return ID; }
 
 void VendingMachine::main() {
-	pPrt->print(Printer::Vending, ID, 'S');
+	pPrt->print(Printer::Vending, ID, 'S', Cost);
 	server->VMregister(this);
 	for (;;) {
-		//_Accept(~VendingMachine) {
-		//	break;
-		//} or _When(!restocking) _Accept(buy, inventory) {
+		_Accept(~VendingMachine) {
+			break;
+		} or _When(!restocking) _Accept(buy, inventory) {
 		_When (!restocking) _Accept(buy, inventory) {
 		} or _When(restocking) _Accept(restocked) {
 		}
