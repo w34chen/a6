@@ -9,6 +9,9 @@ void Truck::main() {
     unsigned int notReplenished;
 	pPrt->print(Printer::Truck, 'S');
 	for (;;) {
+		//_Accept(~Truck) {
+		//	break;
+		//}
 		//obtain location of vending machine from name server
 		VendingMachine **machineList = server->getMachineList();
 		//cout <<"truck obtained vending machine list" <<endl;
@@ -17,10 +20,10 @@ void Truck::main() {
 		if (plant->getShipment(cargo))
 			break;
 		pPrt->print(Printer::Truck, 'P', cargo[0]+cargo[1]+cargo[2]+cargo[3]);
-		cout <<"truck obtained shipment with cargo " <<cargo[0] <<" " <<cargo[1] <<" "
-				<<cargo[2] <<" " <<cargo[3] <<endl;
+		//cout <<"truck obtained shipment with cargo " <<cargo[0] <<" " <<cargo[1] <<" "
+		//		<<cargo[2] <<" " <<cargo[3] <<endl;
 		for (unsigned int i = 0; i < numVendingMachines; i++){ //loop through all machines
-			cout <<"truck: machine " <<i <<endl;
+			//cout <<"truck: machine " <<i <<endl;
 			notReplenished = 0;
 			currentStock = &(*machineList[i]->inventory());  //get existing amount in machines
 			pPrt->print(Printer::Truck, 'd', machineList[i]->getId(), cargo[0]+cargo[1]+cargo[2]+cargo[3]);
