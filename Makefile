@@ -2,7 +2,7 @@ CXX = u++					# compiler
 CXXFLAGS = -g -Wall -Wno-unused-label -MMD	# compiler flags
 MAKEFILE_NAME = ${firstword ${MAKEFILE_LIST}}	# makefile name
 
-OBJECTS1 = Student.o WATCard.o WATCardOffice.o Bank.o Parent.o VendingMachine.o NameServer.o BottlingPlant.o Truck.o Printer.o soda.o  # object files forming 1st executable with prefix "q1"
+OBJECTS1 = Student.o WATCard.o WATCardOffice.o Bank.o Parent.o VendingMachine.o NameServer.o BottlingPlant.o Truck.o Printer.o soda.o config.o # object files forming 1st executable with prefix "q1"
 EXEC1 = soda					# 1st executable name
 
 OBJECTS = ${OBJECTS1}				# all object files
