@@ -41,12 +41,13 @@ Printer::Printer(unsigned int numStudents, unsigned int numVendingMachines, unsi
 }
 
 void Printer::print(Kind kind, char state ) {
-	if (ch[(int)kind] && ch[(int)kind] != state)
+	if (ch[(int)kind])
 		flush();
 
 	if (state=='F') {
 		for (unsigned int i = 0; i < ch.size(); i++) {
-			ch[i] = '.';
+			if (!ch[i])
+				ch[i] = '.';
 		}
 		ch[(int)kind] = state;
 		flush();
@@ -57,7 +58,7 @@ void Printer::print(Kind kind, char state ) {
 
 //function only called when printing F. V # are printed through numBLock
 void Printer::print(Kind kind, char state, int value1 ) {
-	if (ch[(int)kind] && ch[(int)kind] != state)
+	if (ch[(int)kind])
 		flush();
 
 	//occupy ch and num with new values
@@ -67,7 +68,8 @@ void Printer::print(Kind kind, char state, int value1 ) {
 
 void Printer::print(Kind kind, char state, int value1, int value2) {
 	//only flush if there is a change in state
-	if (ch[(int)kind] && ch[(int)kind] != state)
+	//cout <<"parents called " <<endl;
+	if (ch[(int)kind])
 		flush();
 	ch[(int)kind] = state;
 	num1[(int)kind] =value1;
@@ -85,12 +87,13 @@ void Printer::print(Kind kind, unsigned int lid, char state) {
 	else if (kind == Courier)
 		index = (int)Student+student+machine+lid; //index is after all students and vending machines
 
-	if (ch[index] && ch[index] != state)
+	if (ch[index])
 		flush();
 
 	if (state=='F') {
 		for (unsigned int i = 0; i < ch.size(); i++) {
-			ch[i] = '.';
+			if (!ch[i])
+				ch[i] = '.';
 		}
 		ch[index] = state;
 		flush();
@@ -107,7 +110,7 @@ void Printer::print(Kind kind, unsigned int lid, char state, int value1 ) {
 		index = (int)Student+student+lid; //index is after all students
 	else if (kind == Courier)
 		index = (int)Student+student+machine+lid; //index is after all students and vending machines
-	if (ch[index] && ch[index] != state)
+	if (ch[index])
 		flush();
 	ch[index] = state;
 	num1[index] = value1;
@@ -122,7 +125,7 @@ void Printer::print(Kind kind, unsigned int lid, char state, int value1, int val
 		index = (int)Student+student+lid; //index is after all students
 	else if (kind == Courier)
 		index = (int)Student+student+machine+lid; //index is after all students and vending machines
-	if (ch[index] && ch[index] != state)
+	if (ch[index])
 		flush();
 	ch[index] = state;
 	num1[index] = value1;
