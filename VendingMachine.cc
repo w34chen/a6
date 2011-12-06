@@ -15,7 +15,7 @@ VendingMachine::VendingMachine( Printer &prt, NameServer &nameServer, unsigned i
 }
 
 VendingMachine::Status VendingMachine::buy( Flavours flavour, WATCard &card ) {
-	if (!stock[(int)flavour])
+	if (stock[(int)flavour] < 1)
 		return STOCK;
 	if (card.getBalance() < Cost)
 		return FUNDS;
