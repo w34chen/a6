@@ -62,7 +62,7 @@ void Student::main() {
 	    goto L1; // jump out of buying loop
 	  }
 	  
-	  // Yield before purchase soda
+	  // Yield before purchase soda again
 	  unsigned int yieldTime = mprng_(1, 10);
 	  yield(yieldTime);
 	}

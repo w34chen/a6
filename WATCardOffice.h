@@ -68,7 +68,7 @@ _Task WATCardOffice {
 	    printer.print(Printer::Courier, id, 'T', sid, amount);
 
 	    // Randomly lost WATCard
-	    bool loseWATCard = ( mprng_(6) == 0);
+	    bool loseWATCard = ( mprng_(0,5) == 0);
 	    if (loseWATCard) {
 	    	//cout <<"lost watcard" <<endl;
 	      Lost* lost = new Lost();
