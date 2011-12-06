@@ -16,7 +16,6 @@ NameServer::NameServer( Printer &prt, unsigned int numVendingMachines,
 }
 void NameServer::VMregister( VendingMachine *vendingmachine ) {
 	unsigned int id = vendingmachine->getId();
-	//cout <<"registering " <<id <<" machine" <<endl;
 	pPrt->print(Printer::NameServer, 'R', id);
 	machineList[addedMachines] = vendingmachine;
 	addedMachines++;

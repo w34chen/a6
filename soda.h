@@ -1,3 +1,6 @@
+#ifndef SODA_H
+#define SODA_H
+
 #include <uC++.h>
 #include <iostream>
 #include <fstream>
@@ -8,3 +11,5 @@
 
 _Task NameServer;
 _Task VendingMachine;
+
+#endif // SODA_H

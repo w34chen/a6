@@ -15,10 +15,8 @@ VendingMachine::VendingMachine( Printer &prt, NameServer &nameServer, unsigned i
 }
 
 VendingMachine::Status VendingMachine::buy( Flavours flavour, WATCard &card ) {
-	//cout <<"buy" <<endl;
 	if (!stock[(int)flavour])
 		return STOCK;
-	//cout <<"buy2" <<endl;
 	if (card.getBalance() < Cost)
 		return FUNDS;
 	card.withdraw(Cost);
@@ -28,14 +26,12 @@ VendingMachine::Status VendingMachine::buy( Flavours flavour, WATCard &card ) {
 }
 
 unsigned int * VendingMachine::inventory() {
-	//cout <<"called " <<ID <<" inventory: " <<stock <<" " <<&stock[0] <<" " <<&stock[1] <<" " <<&stock[2] <<" " <<&stock[3] <<endl;
 	pPrt->print(Printer::Vending, ID, 'r');
 	restocking = true;
 	return stock;
 }
 
 void VendingMachine::restocked() {
-	//cout <<"called VendingMachine::restocked" <<endl;
 	restocking = false;
 	pPrt->print(Printer::Vending, ID, 'R');
 }
