@@ -31,6 +31,9 @@ void WATCardOffice::main() {
   for (unsigned int i = 0; i < numCouriers ; i++) {
     _Accept(requestWork);
   }
+  // Printer: WATCardOffice Finish
+  printer.print(Printer::WATCardOffice, 'F');
+
 }
 
 WATCardOffice::WATCardOffice( Printer &prt, Bank &bank, unsigned int numCouriers ) : 

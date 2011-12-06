@@ -72,6 +72,9 @@ _Task WATCardOffice {
 	  }
 	  delete job;
 	} // for loop
+	
+	// Printe: Courier Finish
+	printer.print(Printer::Courier, id, 'F');	
       }
     public:
     Courier(Bank& bank, WATCardOffice* const cardOffice, Printer& printer, unsigned int id) : 
