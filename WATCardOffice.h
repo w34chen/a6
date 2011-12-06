@@ -24,9 +24,9 @@ _Task WATCardOffice {
     id(id), amount(amount), watcard(watcard){ }
   };
 
-    struct Job {				// marshalled arguments and return future
-	Args args;				// call arguments (YOU DEFINE "Args")
-	FWATCard result;			// return future
+    struct Job {				
+	Args args;				
+	FWATCard result;			
 	Job( Args args ) : args( args ) {}
     };
 
@@ -41,44 +41,42 @@ _Task WATCardOffice {
 	printer.print(Printer::Courier, id, 'S');
 
 	for (;;) {
-	  _Accept(~Courier) {
-	    // Pinter:Courier Finish
-	    printer.print(Printer::Courier, id, 'F');	    
+	  cout <<"inside courier: " <<id <<endl;
+	  // Request work
+	  job = cardOffice->requestWork();
+	  if (job == NULL) {
+	    break;
 	  }
-	  else {
-		  cout <<"inside courier: " <<id <<endl;
-	    // Request work
-	    job = cardOffice->requestWork();
-	    // Extract parameters from job
-	    unsigned int sid = job->args.id;
-	    unsigned int amount = job->args.amount;
-	    WATCard* &watcard = job->args.watcard;
 	    
-	    // Pinter:Courier Start fund transfer
-	    printer.print(Printer::Courier, id, 't', sid, amount);
-	    cout <<"about to withdraw from bank " <<endl;
-	    // Transfer fond from bank
-	    bank.withdraw(sid, amount);
-	    cout <<"about to deposit to watcard" <<endl;
+	  // Extract parameters from job
+	  unsigned int sid = job->args.id;
+	  unsigned int amount = job->args.amount;
+	  WATCard* &watcard = job->args.watcard;
+	  
+	  // Pinter:Courier Start fund transfer
+	  printer.print(Printer::Courier, id, 't', sid, amount);
+	  cout <<"about to withdraw from bank " <<endl;
+	  // Transfer fond from bank
+	  bank.withdraw(sid, amount);
+	  cout <<"about to deposit to watcard" <<endl;
 
-	    // Deposit money into watcard
-	    watcard->deposit(amount);
+	  // Deposit money into watcard
+	  watcard->deposit(amount);
 
-	    // Pinter:Courier Complete fund transfer
-	    printer.print(Printer::Courier, id, 'T', sid, amount);
+	  // Pinter:Courier Complete fund transfer
+	  printer.print(Printer::Courier, id, 'T', sid, amount);
 
-	    // Randomly lost WATCard
-	    bool loseWATCard = ( mprng_(0,5) == 0);
-	    if (loseWATCard) {
-	    	cout <<"lost watcard" <<endl;
-	      Lost* lost = new Lost();
-	      job->result.exception(lost);
-	    } else {
-	      // Deliver the real watcard pointer for the future
-	      job->result.delivery(watcard);
-	    }
-	    delete job;
-	  } // else
+	  // Randomly lost WATCard
+	  bool loseWATCard = ( mprng_(0,5) == 0);
+	  if (loseWATCard) {
+	    cout <<"lost watcard" <<endl;
+	    Lost* lost = new Lost();
+	    job->result.exception(lost);
+	  } else {
+	    // Deliver the real watcard pointer for the future
+	    job->result.delivery(watcard);
+	  }
+	  delete job;
 	} // for loop
       }
     public:
@@ -87,7 +85,6 @@ _Task WATCardOffice {
       {
 	job = NULL;
       }
-      ~Courier() {}
     };
 
     void main();

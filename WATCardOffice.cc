@@ -8,9 +8,12 @@ void WATCardOffice::main() {
   printer.print(Printer::WATCardOffice, 'S');
 
   for (;;) {
+    _Accept(~WATCardOffice) {
+      break;
+    }
     // Always accept create WATCard
     // Always accept transfer
-    _Accept(create) {
+    or _Accept(create) {
       // Printer::Creation Complete
       printer.print(Printer::WATCardOffice, 'C', jobs.front()->args.id, jobs.front()->args.amount);
     }
@@ -23,6 +26,10 @@ void WATCardOffice::main() {
       // Printer::Courier Complete
       printer.print(Printer::WATCardOffice, 'W');
     } 
+  }
+  
+  for (unsigned int i = 0; i < numCouriers ; i++) {
+    _Accept(requestWork);
   }
 }
 
@@ -66,8 +73,13 @@ FWATCard WATCardOffice::transfer( unsigned int sid, unsigned int amount, WATCard
  
 WATCardOffice::Job* WATCardOffice::requestWork() {
   // Courier request work
-  Job* job = jobs.front();
-  jobs.pop_front();
+  Job* job;
+  if (!jobs.empty()) {
+    job = jobs.front();
+    jobs.pop_front();
+  } else {
+    job = NULL;
+  }
   
   return job;
 }
