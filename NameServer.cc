@@ -3,6 +3,8 @@
 
 using namespace std;
 
+//NameServer constructor. Initialize all variables and assign a vending machine to a student
+//according to their IDs
 NameServer::NameServer( Printer &prt, unsigned int numVendingMachines,
 		unsigned int numStudents ) {
 	pPrt = &prt;
@@ -12,7 +14,7 @@ NameServer::NameServer( Printer &prt, unsigned int numVendingMachines,
 	studVend.resize(numStudents);
 	machineList = new VendingMachine *[numVendingMachines];
 	for (unsigned int i = 0; i < numStudents; i++)
-		studVend[i] = i % numVendingMachines;
+		studVend[i] = i % numVendingMachines; //use % to wrap around
 }
 void NameServer::VMregister( VendingMachine *vendingmachine ) {
 	unsigned int id = vendingmachine->getId();

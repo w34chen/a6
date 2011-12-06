@@ -15,13 +15,13 @@ VendingMachine::VendingMachine( Printer &prt, NameServer &nameServer, unsigned i
 }
 
 VendingMachine::Status VendingMachine::buy( Flavours flavour, WATCard &card ) {
-	if (!stock[(int)flavour])
+	if (stock[(int)flavour] < 1)
 		return STOCK;
 	if (card.getBalance() < Cost)
 		return FUNDS;
 	card.withdraw(Cost);
 	stock[(int)flavour]--;
-	pPrt->print(Printer::Vending, ID, 'B', flavour, stock[(int)flavour]--);
+	pPrt->print(Printer::Vending, ID, 'B', flavour, stock[(int)flavour]);
 	return BUY;
 }
 
