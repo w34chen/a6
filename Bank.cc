@@ -13,12 +13,13 @@ Bank::Bank( unsigned int numStudents ) : numStudents(numStudents) {
 
 void Bank::deposit( unsigned int id, unsigned int amount ) {
   accounts.at(id) += amount;
-  lockList[id].signal();
+  if (!lockList[id].empty() && accounts.at(id) >= lockList[id].front())
+    lockList[id].signal();
 }
  
 void Bank::withdraw( unsigned int id, unsigned int amount ) {
-  while (accounts.at(id) < amount) {
-    lockList[id].wait();
+  if (accounts.at(id) < amount) {
+    lockList[id].wait(amount);
   }
   accounts.at(id) -= amount;
 }

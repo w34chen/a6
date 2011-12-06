@@ -49,14 +49,16 @@ void Student::main() {
 
 	  if (status == VendingMachine::FUNDS) { // Insufficient funds
 	    // Transfer soda-code plus $5 to WATCard via WATCard office
-	    cardOffice.transfer(id, 5 + vendingMachine->cost(), fCard);
+	    fCard = cardOffice.transfer(id, 5 + vendingMachine->cost(), fCard);
+
 	  } else if (status == VendingMachine::STOCK) { // Vending machine out of flavor
 	    // Obtain new vending machine from name server
 	    vendingMachine = nameServer.getMachine(id);
 	    // Printer: Student Select vending machine
 	    printer.print(Printer::Student, id, 'V', vendingMachine->getId());
+
 	  } else { // status == BUY, successful purchase
-	    goto L1; // jump out of buying loop
+	    break; // jump out of buying loop
 	  }
 	  
 	  // Yield before purchase soda again
@@ -75,7 +77,7 @@ void Student::main() {
 	fCard = cardOffice.create(id, 5, card);
       }
     } // while loop
-  L1:; // Successfully bought soda
+   // Successfully bought soda
     // Drink soda
     // Printer: Student Bought a soda
     printer.print(Printer::Student, id, 'B', card->getBalance());
