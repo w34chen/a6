@@ -17,23 +17,21 @@ void Truck::main() {
 
 		yield(mprng_(1, 10));
 
-		if (plant->getShipment(cargo))
+		if (plant->getShipment(cargo))	//if true, it means bottling plant is shutting down so exit
 			break;
 		pPrt->print(Printer::Truck, 'P', cargo[0]+cargo[1]+cargo[2]+cargo[3]);
 
 		for (unsigned int i = 0; i < numVendingMachines; i++){ //loop through all machines
-
 			notReplenished = 0;
 			currentStock = &(*machineList[i]->inventory());  //get existing amount in machines
 			pPrt->print(Printer::Truck, 'd', machineList[i]->getId(), cargo[0]+cargo[1]+cargo[2]+cargo[3]);
 			for (unsigned int j = 0; j < 4; j++) { //loop through all flavours
 				addStock = maxStockPerFlavour - currentStock[j]; //amount to replenish
-
 				if (addStock) {
-						if (cargo[j] > addStock) {
+						if (cargo[j] > addStock) {	//if there's enough to replenish the stock
 						currentStock[j] += addStock;
 						cargo[j] -= addStock;
-					} else {
+					} else {						//if current machine consumes all cargo
 						currentStock[j] += cargo[j];
 						cargo[j] = 0;
 						notReplenished += maxStockPerFlavour - currentStock[j];

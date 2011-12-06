@@ -10,13 +10,13 @@
 _Task NameServer;
 
 _Task VendingMachine {
-	unsigned int ID;
-	unsigned int Cost;
-	unsigned int maxStock;
+	unsigned int ID;		//vending machine location
+	unsigned int Cost;		//unit cost per soda
+	unsigned int maxStock;	//maximum stock per flavour
 	Printer* pPrt;
 	NameServer* server;
-	unsigned int stock[4];
-	bool restocking;
+	unsigned int stock[4];	//current stock count
+	bool restocking;		//used to control which calls it accepts
     void main();
   public:
     enum Flavours { CHERRY, CREAM, BEER, LIME }; 			// flavours of soda (YOU DEFINE)

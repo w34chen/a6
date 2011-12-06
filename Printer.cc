@@ -44,7 +44,7 @@ void Printer::print(Kind kind, char state ) {
 	if (ch[(int)kind])
 		flush();
 
-	if (state=='F') {
+	if (state=='F') { //if state is finished, do an extra flush, otherwise record state like normal
 		for (unsigned int i = 0; i < ch.size(); i++) {
 			if (!ch[i])
 				ch[i] = '.';
@@ -89,7 +89,7 @@ void Printer::print(Kind kind, unsigned int lid, char state) {
 	if (ch[index])
 		flush();
 
-	if (state=='F') {
+	if (state=='F') { //if state is finished, do an extra flush, otherwise record state like normal
 		for (unsigned int i = 0; i < ch.size(); i++) {
 			if (!ch[i])
 				ch[i] = '.';

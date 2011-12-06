@@ -11,7 +11,7 @@ NameServer::NameServer( Printer &prt, unsigned int numVendingMachines,
 	numMachines = numVendingMachines;
 	numStuds = numStudents;
 	addedMachines = 0;
-	studVend.resize(numStudents);
+	studVend.resize(numStudents);		//record the machine Id that's mapped to student per student
 	machineList = new VendingMachine *[numVendingMachines];
 	for (unsigned int i = 0; i < numStudents; i++)
 		studVend[i] = i % numVendingMachines; //use % to wrap around
@@ -19,14 +19,14 @@ NameServer::NameServer( Printer &prt, unsigned int numVendingMachines,
 void NameServer::VMregister( VendingMachine *vendingmachine ) {
 	unsigned int id = vendingmachine->getId();
 	pPrt->print(Printer::NameServer, 'R', id);
-	machineList[addedMachines] = vendingmachine;
-	addedMachines++;
+	machineList[addedMachines] = vendingmachine; //record machines as they start
+	addedMachines++;	//keep track of how many machines were registered for the index of the machineList array
 }
 VendingMachine * NameServer::getMachine( unsigned int id ) {
 	VendingMachine *get;
 	get = machineList[studVend[id]];
 	pPrt->print(Printer::NameServer, 'N', id, get->getId());
-	studVend[id] = (studVend[id]+1)%(addedMachines-1);
+	studVend[id] = (studVend[id]+1)%(addedMachines-1); //retrieve next machine for specific student
 	return get;
 }
 VendingMachine ** NameServer::getMachineList() {
