@@ -53,7 +53,7 @@ FWATCard WATCardOffice::transfer( unsigned int sid, unsigned int amount, WATCard
   // Sufficient fund is obtained from bank
   //cout <<sid <<"s transfer, about to withdraw " <<amount <<" from bank"<<endl;
 //	bank.withdraw(sid, amount);
-	cout <<sid <<"'s transfer withdrew from bank" <<endl;
+	//cout <<sid <<"'s transfer withdrew from bank" <<endl;
 
   // Create job for this transfer
   Args arg(sid, amount, card);

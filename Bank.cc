@@ -11,14 +11,14 @@ Bank::Bank( unsigned int numStudents ) : numStudents(numStudents) {
 
 
 void Bank::deposit( unsigned int id, unsigned int amount ) {
-	cout <<"deposit " <<amount <<" to " <<id;
+	//cout <<"deposit " <<amount <<" to " <<id;
   accounts.at(id) += amount;
-  cout <<" deposited amount is " <<accounts.at(id) <<endl;
+ // cout <<" deposited amount is " <<accounts.at(id) <<endl;
 }
  
 void Bank::withdraw( unsigned int id, unsigned int amount ) {
-	cout <<"withdraw from " <<id <<" with " <<amount <<endl;
+	//cout <<"withdraw from " <<id <<" with " <<amount <<endl;
   while (accounts.at(id) < amount) _Accept(deposit);
   accounts.at(id) -= amount;
-  cout <<id <<" withdrawn amount is " <<accounts.at(id) <<endl;
+  //cout <<id <<" withdrawn amount is " <<accounts.at(id) <<endl;
 }
