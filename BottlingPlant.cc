@@ -40,9 +40,9 @@ void BottlingPlant::main() {
 			break;
 		} or _Accept (getShipment) {
 			yield(timeBetweenShipments);
+			pPrt->print(Printer::BottlingPlant, 'G', producedStock[0]+producedStock[1]+producedStock[2]+producedStock[3]);
 			for (int i = 0; i < 4; i++)
 				producedStock[i] = mprng_(0, maxShippedPerFlavour);
-			pPrt->print(Printer::BottlingPlant, 'G', producedStock[0]+producedStock[1]+producedStock[2]+producedStock[3]);
 			pPrt->print(Printer::BottlingPlant, 'P'); //this one might need to go in getShipment
 		}
 	}
