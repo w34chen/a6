@@ -15,10 +15,10 @@ _Task BottlingPlant {
 	unsigned int maxShippedPerFlavour;
 	unsigned int maxStockPerFlavour;
 	unsigned int timeBetweenShipments;
-	unsigned int producedStock[4];
+	unsigned int producedStock[4];		//soda produced for every flavour
 	Truck *truck;
-	uCondition pickup;
-	bool destruct;
+	uCondition pickup;					//used so bottingplant is not deleted before truck is
+	bool destruct;						//flag used to know when bottling plant is destructing
     void main();
   public:
     BottlingPlant( Printer &prt, NameServer &nameServer, unsigned int numVendingMachines,

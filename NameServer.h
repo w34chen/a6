@@ -15,7 +15,7 @@ _Task NameServer {
 	unsigned int numStuds;
 	unsigned int addedMachines;
 	VendingMachine **machineList;
-	std::vector<unsigned int> studVend;
+	std::vector<unsigned int> studVend;	//used to record each student's last matched machine
     void main();
   public:
     NameServer( Printer &prt, unsigned int numVendingMachines, unsigned int numStudents );

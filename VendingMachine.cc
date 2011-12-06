@@ -11,7 +11,7 @@ VendingMachine::VendingMachine( Printer &prt, NameServer &nameServer, unsigned i
 	Cost = sodaCost;
 	maxStock = maxStockPerFlavour;
 	for (int i = 0; i < 4; i++)
-		stock[i] = 0;
+		stock[i] = 0;	//initialize the value of vending machine stock
 }
 
 VendingMachine::Status VendingMachine::buy( Flavours flavour, WATCard &card ) {
@@ -19,20 +19,20 @@ VendingMachine::Status VendingMachine::buy( Flavours flavour, WATCard &card ) {
 		return STOCK;
 	if (card.getBalance() < Cost)
 		return FUNDS;
-	card.withdraw(Cost);
-	stock[(int)flavour]--;
+	card.withdraw(Cost); //if there is stock and there's enough funds on the card, withdraw money
+	stock[(int)flavour]--; //update stock count
 	pPrt->print(Printer::Vending, ID, 'B', flavour, stock[(int)flavour]);
 	return BUY;
 }
 
 unsigned int * VendingMachine::inventory() {
 	pPrt->print(Printer::Vending, ID, 'r');
-	restocking = true;
+	restocking = true; //set flag so only accept calsl to restocked
 	return stock;
 }
 
 void VendingMachine::restocked() {
-	restocking = false;
+	restocking = false; //reset flag so VendingMachine will accept calls to Inventory and buy as well
 	pPrt->print(Printer::Vending, ID, 'R');
 }
 
