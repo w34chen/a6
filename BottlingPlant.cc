@@ -12,10 +12,17 @@ bool BottlingPlant::getShipment( unsigned int cargo[] ) {
 		pickup.signal();
 		return true;
 	}
-	for (int i = 0; i < 4; i++)
-		cargo[i] = producedStock[i];
-	pickup.signal();
-	cout <<"bottling plant get shipment: unblocked" <<endl;
+	for (int i = 0; i < 4; i++) {
+		if (producedStock[i] > maxShippedPerFlavour) {
+			cargo[i] = maxShippedPerFlavour;
+			producedStock[i] -= maxShippedPerFlavour;
+		} else {
+			cargo[i] = producedStock[i];
+			producedStock[i] = 0;
+		}
+	}
+	//pickup.signal();
+	//cout <<"bottling plant get shipment: unblocked" <<endl;
     return false;
 }
 
@@ -28,6 +35,10 @@ BottlingPlant::~BottlingPlant() {
 void BottlingPlant::main() {
 	pPrt->print(Printer::BottlingPlant, 'S');
 	truck = new Truck(*pPrt, *server, *this, numVendingMachines, maxStockPerFlavour);
+	for (int i = 0; i < 4; i++) {
+		producedStock[i] = rand()%maxShippedPerFlavour;
+		//cout <<"produced " <<i <<" flavour with quantity " <<producedStock[i] <<endl;
+	}
 	for (;;) {
 		_Accept(~BottlingPlant) {
 			break;
@@ -39,7 +50,7 @@ void BottlingPlant::main() {
 				//cout <<"produced " <<i <<" flavour with quantity " <<producedStock[i] <<endl;
 			}
 			pPrt->print(Printer::BottlingPlant, 'G', producedStock[0]+producedStock[1]+producedStock[2]+producedStock[3]);
-			pickup.wait();
+			//pickup.wait();
 			pPrt->print(Printer::BottlingPlant, 'P'); //this one might need to go in getShipment
 		}
 	}

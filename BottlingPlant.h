@@ -30,6 +30,8 @@ _Task BottlingPlant {
     			maxStockPerFlavour(maxStockPerFlavour),
     			timeBetweenShipments(timeBetweenShipments) {
     	destruct = false;
+    	for (int i = 0; i < 4; i++)
+    		producedStock[i] = 0;
     };
     bool getShipment( unsigned int cargo[] );
     ~BottlingPlant();
