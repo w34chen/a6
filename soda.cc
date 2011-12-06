@@ -19,7 +19,7 @@ MPRNG mprng_;
 
 using namespace std;
 
-bool convert( unsigned int &val, char *buffer ) {		// convert C string to integer
+bool convert( int &val, char *buffer ) {		// convert C string to integer
     std::stringstream ss( buffer );			// connect stream and buffer
     ss >> dec >> val;					// convert integer from buffer
     return ! ss.fail() &&				// conversion successful ?
@@ -34,7 +34,7 @@ void usage( char *argv[] ) {
 
 void uMain::main() {
 
-  unsigned int seed = getpid();
+  int seed = getpid();
   ConfigParms config;
   
   switch ( argc ) {

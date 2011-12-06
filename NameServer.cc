@@ -26,7 +26,7 @@ VendingMachine * NameServer::getMachine( unsigned int id ) {
 	VendingMachine *get;
 	get = machineList[studVend[id]];
 	pPrt->print(Printer::NameServer, 'N', id, get->getId());
-	studVend[id] = (studVend[id]+1)%(addedMachines-1); //retrieve next machine for specific student
+	studVend[id] = (studVend[id]+1)%(addedMachines); //retrieve next machine for specific student
 	return get;
 }
 VendingMachine ** NameServer::getMachineList() {
