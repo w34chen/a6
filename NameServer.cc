@@ -42,3 +42,7 @@ void NameServer::main() {
 	}
 	pPrt->print(Printer::NameServer, 'F');
 }
+
+NameServer::~NameServer() {
+  delete[] machineList;
+}
