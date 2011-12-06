@@ -14,11 +14,6 @@ Parent::Parent( Printer &prt, Bank &bank, unsigned int numStudents, unsigned int
   
 }
 
-Parent::~Parent() {
-  //Printer: Parent Finished
-  printer.print(Printer::Parent, 'F');
-}
-
 void Parent::main() {
 
   // periodically gives a random amount of money [$1, $3] to a random student
@@ -50,4 +45,6 @@ void Parent::main() {
       printer.print(Printer::Parent, 'D', studentId, amount);
     }
   }
+  //Printer: Parent Finished
+  printer.print(Printer::Parent, 'F');
 }

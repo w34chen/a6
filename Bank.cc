@@ -7,14 +7,22 @@ using namespace std;
 
 Bank::Bank( unsigned int numStudents ) : numStudents(numStudents) {
   accounts.resize(numStudents, 0);
+  lockList = new uCondition[numStudents];
 }
 
 
 void Bank::deposit( unsigned int id, unsigned int amount ) {
   accounts.at(id) += amount;
+  lockList[id].signal();
 }
  
 void Bank::withdraw( unsigned int id, unsigned int amount ) {
-  while (accounts.at(id) < amount) _Accept(deposit);
+  while (accounts.at(id) < amount) {
+    lockList[id].wait();
+  }
   accounts.at(id) -= amount;
+}
+
+Bank::~Bank() {
+  delete[] lockList;
 }
